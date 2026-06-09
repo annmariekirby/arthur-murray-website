@@ -1,0 +1,225 @@
+/* =========================================================================
+   Arthur Murray Mt. Pleasant — Colors & Type
+   A calm, modern, editorial system. Mostly black, white, and warm neutrals.
+   ========================================================================= */
+
+/* ---- Web fonts (Google Fonts substitutes; flagged in README) -------------
+   Display serif:   Playfair Display  (substitute for the high-contrast didone
+                                       used in "MAY 2026")
+   Body sans:       Montserrat        (substitute for the wide-tracked
+                                       geometric all-caps sans in headers)
+   Body text:       Inter             (clean, neutral; matches body copy in
+                                       the calendar artwork)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* ---------- Brand color tokens --------------------------------------- */
+
+  /* Core neutrals. The brand lives almost entirely in this column. */
+  --am-ink:        #0A0A0A;   /* near-black — logo, headlines, rule lines */
+  --am-ink-soft:  #2A2A2A;   /* secondary text */
+  --am-graphite:  #5A5A5A;   /* tertiary text, captions, day labels */
+  --am-stone:     #8A8A8A;   /* hints, disabled, low-emphasis dividers */
+  --am-mist:      #C9C9C9;   /* hairlines, borders */
+  --am-fog:       #E6E6E6;   /* card borders, subtle dividers */
+  --am-linen:     #F4F2EE;   /* warm off-white surface (the studio walls) */
+  --am-paper:     #FAF8F4;   /* page background — warm cream */
+  --am-bone:      #F8F5EF;   /* alt surface, soft warm */
+  --am-white:     #FFFFFF;
+
+  /* Accent — used sparingly. Inspired by the warm wood + brass of the
+     studio interior. Most surfaces should NOT use accent color. */
+  --am-brass:     #B89668;   /* warm metallic — accents, hovers */
+  --am-brass-deep:#8E6F47;   /* pressed / hover */
+  --am-bordeaux:  #6B2C2C;   /* deep red — used very rarely (formal events) */
+
+  /* Semantic state colors — kept muted to fit the calm palette */
+  --am-success:   #4F7A5A;
+  --am-warning:   #B5853A;
+  --am-error:     #9C3E3E;
+  --am-info:      #4A6B82;
+
+  /* ---------- Semantic surfaces & foreground --------------------------- */
+  --bg-page:        var(--am-paper);
+  --bg-surface:     var(--am-white);
+  --bg-surface-alt: var(--am-linen);
+  --bg-inverse:     var(--am-ink);
+
+  --fg-primary:     var(--am-ink);
+  --fg-secondary:   var(--am-ink-soft);
+  --fg-tertiary:    var(--am-graphite);
+  --fg-muted:       var(--am-stone);
+  --fg-on-inverse:  var(--am-paper);
+
+  --border-hairline:#EAE7E0;   /* the most common border in the brand */
+  --border-subtle:  var(--am-fog);
+  --border-strong:  var(--am-ink);
+
+  /* ---------- Type families -------------------------------------------- */
+  --font-display: 'Playfair Display', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-sans:    'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ---------- Type scale ----------------------------------------------- */
+  --fs-display-xl: 96px;   /* hero "MAY" treatment */
+  --fs-display-l:  64px;
+  --fs-display-m:  44px;
+  --fs-display-s:  32px;
+
+  --fs-eyebrow:    16px;   /* spaced caps over content */
+  --fs-h1:         28px;
+  --fs-h2:         22px;
+  --fs-h3:         20px;
+  --fs-body:       20px;
+  --fs-small:      18px;
+  --fs-micro:      16px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-loose:   1.65;
+
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;     /* default for spaced caps headers */
+  --tracking-xwide:  0.18em;     /* logo-style + eyebrow caps */
+
+  /* ---------- Spacing (4px base) --------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---------- Radii (kept small — editorial, not bubbly) --------------- */
+  --radius-none: 0px;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;       /* cap. Avoid larger; brand is sharp/editorial */
+  --radius-pill: 999px;     /* used only for tags / chips */
+
+  /* ---------- Elevation. Almost flat — borders do most of the work. ---- */
+  --shadow-none: none;
+  --shadow-xs:   0 1px 2px rgba(10,10,10,0.04);
+  --shadow-sm:   0 1px 3px rgba(10,10,10,0.06), 0 1px 2px rgba(10,10,10,0.04);
+  --shadow-md:   0 4px 12px rgba(10,10,10,0.06), 0 2px 4px rgba(10,10,10,0.04);
+  --shadow-lg:   0 12px 32px rgba(10,10,10,0.08), 0 4px 8px rgba(10,10,10,0.04);
+
+  /* ---------- Motion --------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast:    150ms;
+  --dur-base:    220ms;
+  --dur-slow:    400ms;
+  --dur-slower:  700ms;     /* slow fades — the brand favors composure */
+}
+
+/* =========================================================================
+   Element defaults
+   ========================================================================= */
+
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  color: var(--fg-primary);
+  font-weight: 400;
+}
+
+/* Display type — high-contrast serif, italic-friendly. Used for big numbers,
+   month names, hero treatments. Tracked tight. */
+.am-display,
+h1.am-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display-l);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.am-display--xl { font-size: var(--fs-display-xl); }
+.am-display--m  { font-size: var(--fs-display-m); }
+.am-display--s  { font-size: var(--fs-display-s); }
+
+/* Headline — the dominant header style on most surfaces.
+   ALL CAPS, generously spaced, geometric sans. Reads "modern editorial". */
+.am-headline,
+h1, h2 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-xwide);
+  line-height: var(--lh-snug);
+}
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+
+/* Subheads — sentence case sans, lighter weight */
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--lh-snug);
+}
+
+/* Eyebrow — the small spaced-caps label seen above sections */
+.am-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-xwide);
+  color: var(--fg-tertiary);
+}
+
+/* Body */
+p, .am-body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  color: var(--fg-secondary);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.am-small  { font-size: var(--fs-small); }
+.am-micro  { font-size: var(--fs-micro); letter-spacing: 0.04em; }
+
+/* Calendar / metadata label — compact uppercase, used for day labels
+   and class titles in the calendar artwork */
+.am-meta {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-tertiary);
+  line-height: 1.4;
+}
+
+/* Hairline divider — the brand's most common separator */
+.am-rule {
+  border: 0;
+  border-top: 1px solid var(--border-hairline);
+  margin: var(--space-6) 0;
+}
+
+.am-rule--strong { border-top-color: var(--border-strong); }
