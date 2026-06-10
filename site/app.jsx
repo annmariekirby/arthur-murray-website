@@ -102,20 +102,81 @@ const REEL = [
 ];
 const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle dissolve)
 
-/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop.
- * On mobile / touch devices the multi-video seek+crossfade engine is unreliable
- * (iOS blocks programmatic play, esp. in Low Power Mode, leaving it "stuck" on a
- * frame), so there we fall back to a single declarative-autoplay looping clip
- * with a photo poster — which iOS plays inline dependably. */
+/* Single-element sequential player for touch devices. iPhones only allow ONE
+ * <video> to play at a time, so the desktop two-video cross-fade gets "stuck"
+ * there. Instead we run the whole compilation on one element, hard-cutting
+ * clip-to-clip with a quick opacity dip so it still feels intentional. */
+function HeroReelMobile() {
+  const vRef = useRef(null);
+  useEffect(() => {
+    const v = vRef.current;
+    if (!v) return;
+    let i = 0, stopped = false, switching = false;
+    const urlCache = {};
+    const getUrl = async (src) => {
+      if (urlCache[src]) return urlCache[src];
+      try { const blob = await (await fetch(src)).blob(); return (urlCache[src] = URL.createObjectURL(blob)); }
+      catch (e) { return src; } // fall back to direct URL if fetch is blocked
+    };
+    const load = async (idx) => {
+      const seg = REEL[idx % REEL.length];
+      const url = await getUrl(seg.src);
+      await new Promise((res) => {
+        let done = false;
+        const finish = () => { if (done) return; done = true; res(); };
+        const onReady = () => { v.removeEventListener('loadeddata', onReady); try { v.currentTime = seg.start; } catch (e) {} finish(); };
+        v.addEventListener('loadeddata', onReady);
+        v.src = url; v.load();
+        setTimeout(finish, 2000);
+      });
+    };
+    const advance = async () => {
+      if (stopped || switching) return;
+      switching = true;
+      v.style.opacity = '0';
+      setTimeout(async () => {
+        i = (i + 1) % REEL.length;
+        await load(i);
+        try { await v.play(); } catch (e) {}
+        v.style.opacity = '1';
+        switching = false;
+      }, 350);
+    };
+    const onTime = () => {
+      const seg = REEL[i % REEL.length];
+      if (!switching && v.currentTime >= seg.end) advance();
+    };
+    v.addEventListener('timeupdate', onTime);
+    v.addEventListener('ended', advance);
+    (async () => {
+      await load(0);
+      try { await v.play(); } catch (e) {}
+      v.style.opacity = '1';
+    })();
+    return () => {
+      stopped = true;
+      v.removeEventListener('timeupdate', onTime);
+      v.removeEventListener('ended', advance);
+      Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} });
+    };
+  }, []);
+  return (
+    <div className="reel">
+      <video ref={vRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/hero.jpg"></video>
+    </div>
+  );
+}
+
+/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop. */
 function HeroReel() {
-  const aRef = useRef(null), bRef = useRef(null);
-  const simple = useRef(
+  const isTouch = useRef(
     typeof window !== 'undefined' && window.matchMedia
       ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
       : false
   ).current;
+  const aRef = useRef(null), bRef = useRef(null);
   useEffect(() => {
-    if (simple) return;
+    if (isTouch) return;
     const els = [aRef.current, bRef.current];
     if (!els[0] || !els[1]) return;
     let cur = 0;            // index (0|1) of the element that is visible + playing
@@ -185,23 +246,7 @@ function HeroReel() {
     begin();
     return () => { stopped = true; cancelAnimationFrame(raf); Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} }); };
   }, []);
-  if (simple) {
-    return (
-      <div className="reel">
-        <video
-          className="reel__v"
-          src={REEL[0].src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="assets/photos/hero.jpg"
-          style={{ opacity: 1 }}
-        ></video>
-      </div>
-    );
-  }
+  if (isTouch) return <HeroReelMobile />;
   return (
     <div className="reel">
       <video ref={aRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/hero.jpg"></video>

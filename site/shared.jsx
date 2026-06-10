@@ -59,14 +59,11 @@ function Nav() {
   return (
     <nav className={"nav" + (open ? " nav--open" : "")}>
       <div className="nav__inner">
-        <div className="nav__links nav__links--left">
-          {left.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
-        </div>
         <a className="nav__logo" href="index.html" aria-label="Arthur Murray Dance Studio of Mt. Pleasant home">
           <img src="assets/logo-lockup.png" alt="Arthur Murray Dance Studios, Mt. Pleasant" />
         </a>
-        <div className="nav__links nav__links--right">
-          {right.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
+        <div className="nav__links">
+          {NAV_ITEMS.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
         </div>
         <button className="nav__menu-btn" onClick={() => setOpen(o => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           <span className="nav__menu-label">{open ? "Close" : "Menu"}</span>
