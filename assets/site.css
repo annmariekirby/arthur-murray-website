@@ -540,8 +540,12 @@ html[data-form="float"] .floatcta { display: inline-flex; }
   /* Keep the reel frame a TRUE 9:16 box (sized by height, capped by width) so
      object-fit:cover crops the clip's baked-in side pillar-bars cleanly. A
      max-height clamp would make the box wider than 9:16 and let the bars show. */
-  .hero--split .hero__frame:has(.reel) { width: auto; height: min(66vh, 540px); max-width: 100%; aspect-ratio: 9 / 16; }
-  .hero--split .hero__framewrap:has(.reel) { width: fit-content; max-width: 100%; margin: 0 auto; }
+  /* Explicit width (height derived from aspect-ratio) so the frame can never
+     collapse on iOS Safari, which doesn't reliably size a fit-content parent
+     from an aspect-ratio-derived width. Still a true 9:16 box, so object-fit
+     cover crops the clip's baked-in side pillar-bars cleanly. */
+  .hero--split .hero__framewrap:has(.reel) { width: min(76vw, 290px); max-width: 100%; margin: 0 auto; }
+  .hero--split .hero__frame:has(.reel) { width: 100%; height: auto; aspect-ratio: 9 / 16; }
   .hero--split .hero__grid:has(.reel) { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
