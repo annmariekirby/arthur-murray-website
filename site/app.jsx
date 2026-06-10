@@ -102,10 +102,20 @@ const REEL = [
 ];
 const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle dissolve)
 
-/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop. */
+/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop.
+ * On mobile / touch devices the multi-video seek+crossfade engine is unreliable
+ * (iOS blocks programmatic play, esp. in Low Power Mode, leaving it "stuck" on a
+ * frame), so there we fall back to a single declarative-autoplay looping clip
+ * with a photo poster — which iOS plays inline dependably. */
 function HeroReel() {
   const aRef = useRef(null), bRef = useRef(null);
+  const simple = useRef(
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+      : false
+  ).current;
   useEffect(() => {
+    if (simple) return;
     const els = [aRef.current, bRef.current];
     if (!els[0] || !els[1]) return;
     let cur = 0;            // index (0|1) of the element that is visible + playing
@@ -175,9 +185,26 @@ function HeroReel() {
     begin();
     return () => { stopped = true; cancelAnimationFrame(raf); Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} }); };
   }, []);
+  if (simple) {
+    return (
+      <div className="reel">
+        <video
+          className="reel__v"
+          src={REEL[0].src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="assets/photos/hero.jpg"
+          style={{ opacity: 1 }}
+        ></video>
+      </div>
+    );
+  }
   return (
     <div className="reel">
-      <video ref={aRef} className="reel__v" muted playsInline preload="auto"></video>
+      <video ref={aRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/hero.jpg"></video>
       <video ref={bRef} className="reel__v" muted playsInline preload="auto"></video>
     </div>
   );
