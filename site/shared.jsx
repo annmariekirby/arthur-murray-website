@@ -57,7 +57,7 @@ function Nav() {
   const right = NAV_ITEMS.slice(3);
   const cls = (href) => "nav__link" + (isActive(href) ? " is-active" : "");
   return (
-    <nav className="nav">
+    <nav className={"nav" + (open ? " nav--open" : "")}>
       <div className="nav__inner">
         <div className="nav__links nav__links--left">
           {left.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
@@ -69,14 +69,22 @@ function Nav() {
           {right.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
         </div>
         <button className="nav__menu-btn" onClick={() => setOpen(o => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
-          {open
-            ? (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>)
-            : (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>)}
+          <span className="nav__menu-label">{open ? "Close" : "Menu"}</span>
+          <span className="nav__menu-rule" aria-hidden="true"></span>
         </button>
       </div>
       {open && (
-        <div className="nav__mobile">
-          {NAV_ITEMS.map((it) => (<a key={it.label} href={it.href} onClick={close} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
+        <div className="nav__mobile" role="dialog" aria-modal="true" aria-label="Site menu">
+          <div className="nav__mobile-inner">
+            <p className="nav__mobile-eyebrow">Arthur Murray Mt. Pleasant</p>
+            <div className="nav__mobile-links">
+              {NAV_ITEMS.map((it) => (<a key={it.label} href={it.href} onClick={close} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
+            </div>
+            <div className="nav__mobile-foot">
+              <span className="nav__mobile-foot-label">Call or text</span>
+              <a className="nav__mobile-phone" href={"tel:" + PHONE_TEL}>{PHONE}</a>
+            </div>
+          </div>
         </div>
       )}
     </nav>
