@@ -502,8 +502,11 @@ html[data-form="float"] .floatcta { display: inline-flex; }
   html[data-form="split"] .lead__intro p { margin-left: auto; }
   html[data-form="split"] .lead__contacts { justify-content: center; }
   .hero--split .hero__grid { grid-template-columns: 1fr; gap: 40px; }
-  .hero--split .hero__frame:has(.reel) { width: 100%; height: auto; max-height: 78vh; }
-  .hero--split .hero__framewrap:has(.reel) { max-width: 460px; margin: 0 auto; width: 100%; }
+  /* Keep the reel frame a TRUE 9:16 box (sized by height, capped by width) so
+     object-fit:cover crops the clip's baked-in side pillar-bars cleanly. A
+     max-height clamp would make the box wider than 9:16 and let the bars show. */
+  .hero--split .hero__frame:has(.reel) { width: auto; height: min(66vh, 540px); max-width: 100%; aspect-ratio: 9 / 16; }
+  .hero--split .hero__framewrap:has(.reel) { width: fit-content; max-width: 100%; margin: 0 auto; }
   .hero--split .hero__grid:has(.reel) { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
@@ -783,6 +786,10 @@ html[data-accent="brass"] .flyer__incl svg { color: var(--am-brass-deep); }
 .flyer__note { font-family: var(--font-body); font-size: 17px; line-height: 1.65; color: var(--fg-tertiary); margin: 24px 0 0; }
 @media (max-width: 1000px) {
   .flyer, .flyer--ink { grid-template-columns: 1fr; }
+  /* Grid items default to min-width:auto, which lets wide content (the countdown
+     row) push the column — and the card's overflow:hidden then clips the schedule.
+     min-width:0 lets the single column shrink to the viewport and reflow. */
+  .flyer__body, .flyer__aside { min-width: 0; }
   .flyer__media { border-right: 0; border-bottom: 1px solid var(--am-ink); display: flex; justify-content: center; padding: 40px 28px; }
   .flyer__media image-slot, .flyer__media img { width: 100%; max-width: 360px; height: auto; aspect-ratio: 2 / 3; }
   .flyer__body { padding: 48px 40px; }
@@ -893,7 +900,14 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
 .cd__num { display: block; font-family: var(--font-display); font-size: 46px; line-height: 1; color: var(--am-paper); border: 1px solid rgba(250, 248, 244, 0.26); border-radius: var(--radius-sm); padding: 16px 0; font-variant-numeric: tabular-nums; text-align: center; }
 .cd__label { font-family: var(--font-sans); font-size: 17px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250, 248, 244, 0.5); margin-top: 11px; text-align: center; }
 .gobanner__cta { margin-top: 42px; }
-@media (max-width: 560px) { .countdown { gap: 10px; } .cd { min-width: 62px; } .cd__num { font-size: 34px; padding: 12px 0; } }
+@media (max-width: 560px) {
+  /* Let the four cells share the row and the labels shrink so "MINUTES"/"SECONDS"
+     never force the cell (and the whole flyer card) wider than the screen. */
+  .countdown { gap: 8px; flex-wrap: wrap; }
+  .cd { min-width: 0; flex: 1 1 56px; }
+  .cd__num { font-size: 30px; padding: 11px 0; }
+  .cd__label { font-size: 11px; letter-spacing: 0.08em; }
+}
 
 .godetail { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; max-width: 1100px; margin: 0 auto; }
 .godetail .display { font-size: clamp(26px, 2.6vw, 38px); }
