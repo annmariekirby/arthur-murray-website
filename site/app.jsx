@@ -107,7 +107,7 @@ const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle di
  * never flashes the poster, and the rAF loop clips each segment to its agreed
  * in/out points. (A single-element player flashed the poster on every reload.) */
 function HeroReel() {
-  const aRef = useRef(null), bRef = useRef(null);
+  const aRef = useRef(null), bRef = useRef(null), stillRef = useRef(null);
   useEffect(() => {
     const els = [aRef.current, bRef.current];
     if (!els[0] || !els[1]) return;
@@ -148,6 +148,12 @@ function HeroReel() {
       await prep(1, 1);
       els[0].style.opacity = '1'; els[1].style.opacity = '0';
       try { await els[0].play(); } catch (e) {}
+      // Fade the fallback still out only once real playback has begun, so it
+      // shows on first load / in Low Power Mode (no black rectangle) but is gone
+      // during crossfades — which then dissolve over black, never the still.
+      const hideStill = () => { if (stillRef.current) stillRef.current.style.opacity = '0'; };
+      if (!els[0].paused && els[0].currentTime > 0) hideStill();
+      else els[0].addEventListener('timeupdate', function once() { els[0].removeEventListener('timeupdate', once); hideStill(); });
       raf = requestAnimationFrame(loop);
     };
 
@@ -180,8 +186,9 @@ function HeroReel() {
   }, []);
   return (
     <div className="reel">
-      <video ref={aRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/reel-still.jpg"></video>
-      <video ref={bRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/reel-still.jpg"></video>
+      <img ref={stillRef} className="reel__still" src="assets/photos/reel-still.jpg" alt="" aria-hidden="true" />
+      <video ref={aRef} className="reel__v" muted playsInline preload="auto"></video>
+      <video ref={bRef} className="reel__v" muted playsInline preload="auto"></video>
     </div>
   );
 }
