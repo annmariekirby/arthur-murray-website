@@ -104,14 +104,16 @@ const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle di
 
 /* Single-element sequential player for touch devices. iPhones only allow ONE
  * <video> to play at a time, so the desktop two-video cross-fade gets "stuck"
- * there. Instead we run the whole compilation on one element, hard-cutting
- * clip-to-clip with a quick opacity dip so it still feels intentional. */
+ * there. Instead we run the whole compilation on one element, playing each
+ * clip's AGREED segment (start→end) in turn with a quick opacity dip on the cut.
+ * Uses a rAF loop (not throttled `timeupdate`) so the out-point is precise, and
+ * re-asserts the in-point until the decoder actually honors the seek. */
 function HeroReelMobile() {
   const vRef = useRef(null);
   useEffect(() => {
     const v = vRef.current;
     if (!v) return;
-    let i = 0, stopped = false, switching = false;
+    let i = 0, stopped = false, switching = false, raf = 0, seekTries = 0;
     const urlCache = {};
     const getUrl = async (src) => {
       if (urlCache[src]) return urlCache[src];
@@ -124,39 +126,53 @@ function HeroReelMobile() {
       await new Promise((res) => {
         let done = false;
         const finish = () => { if (done) return; done = true; res(); };
-        const onReady = () => { v.removeEventListener('loadeddata', onReady); try { v.currentTime = seg.start; } catch (e) {} finish(); };
+        const onReady = () => {
+          v.removeEventListener('loadeddata', onReady);
+          try { v.currentTime = seg.start; } catch (e) {}
+          finish();
+        };
         v.addEventListener('loadeddata', onReady);
         v.src = url; v.load();
-        setTimeout(finish, 2000);
+        setTimeout(finish, 2500);
       });
     };
-    const advance = async () => {
+    const advance = () => {
       if (stopped || switching) return;
       switching = true;
       v.style.opacity = '0';
       setTimeout(async () => {
         i = (i + 1) % REEL.length;
+        seekTries = 0;
         await load(i);
         try { await v.play(); } catch (e) {}
         v.style.opacity = '1';
         switching = false;
       }, 350);
     };
-    const onTime = () => {
-      const seg = REEL[i % REEL.length];
-      if (!switching && v.currentTime >= seg.end) advance();
+    const loop = () => {
+      if (stopped) return;
+      if (!switching) {
+        const seg = REEL[i % REEL.length];
+        // If the decoder ignored the in-point seek (common on iOS right after
+        // play()), nudge it back into the window a few times until it sticks.
+        if (v.currentTime < seg.start - 0.1 && seekTries < 30) {
+          try { v.currentTime = seg.start; } catch (e) {}
+          seekTries++;
+        } else if (v.currentTime >= seg.end) {
+          advance();
+        }
+      }
+      raf = requestAnimationFrame(loop);
     };
-    v.addEventListener('timeupdate', onTime);
-    v.addEventListener('ended', advance);
     (async () => {
       await load(0);
       try { await v.play(); } catch (e) {}
       v.style.opacity = '1';
+      raf = requestAnimationFrame(loop);
     })();
     return () => {
       stopped = true;
-      v.removeEventListener('timeupdate', onTime);
-      v.removeEventListener('ended', advance);
+      cancelAnimationFrame(raf);
       Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} });
     };
   }, []);
