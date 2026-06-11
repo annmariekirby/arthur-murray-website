@@ -102,97 +102,13 @@ const REEL = [
 ];
 const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle dissolve)
 
-/* Single-element sequential player for touch devices. iPhones only allow ONE
- * <video> to play at a time, so the desktop two-video cross-fade gets "stuck"
- * there. Instead we run the whole compilation on one element, playing each
- * clip's AGREED segment (start→end) in turn with a quick opacity dip on the cut.
- * Uses a rAF loop (not throttled `timeupdate`) so the out-point is precise, and
- * re-asserts the in-point until the decoder actually honors the seek. */
-function HeroReelMobile() {
-  const vRef = useRef(null);
-  useEffect(() => {
-    const v = vRef.current;
-    if (!v) return;
-    let i = 0, stopped = false, switching = false, raf = 0, seekTries = 0;
-    const urlCache = {};
-    const getUrl = async (src) => {
-      if (urlCache[src]) return urlCache[src];
-      try { const blob = await (await fetch(src)).blob(); return (urlCache[src] = URL.createObjectURL(blob)); }
-      catch (e) { return src; } // fall back to direct URL if fetch is blocked
-    };
-    const load = async (idx) => {
-      const seg = REEL[idx % REEL.length];
-      const url = await getUrl(seg.src);
-      await new Promise((res) => {
-        let done = false;
-        const finish = () => { if (done) return; done = true; res(); };
-        const onReady = () => {
-          v.removeEventListener('loadeddata', onReady);
-          try { v.currentTime = seg.start; } catch (e) {}
-          finish();
-        };
-        v.addEventListener('loadeddata', onReady);
-        v.src = url; v.load();
-        setTimeout(finish, 2500);
-      });
-    };
-    const advance = () => {
-      if (stopped || switching) return;
-      switching = true;
-      v.style.opacity = '0';
-      setTimeout(async () => {
-        i = (i + 1) % REEL.length;
-        seekTries = 0;
-        await load(i);
-        try { await v.play(); } catch (e) {}
-        v.style.opacity = '1';
-        switching = false;
-      }, 350);
-    };
-    const loop = () => {
-      if (stopped) return;
-      if (!switching) {
-        const seg = REEL[i % REEL.length];
-        // If the decoder ignored the in-point seek (common on iOS right after
-        // play()), nudge it back into the window a few times until it sticks.
-        if (v.currentTime < seg.start - 0.1 && seekTries < 30) {
-          try { v.currentTime = seg.start; } catch (e) {}
-          seekTries++;
-        } else if (v.currentTime >= seg.end) {
-          advance();
-        }
-      }
-      raf = requestAnimationFrame(loop);
-    };
-    (async () => {
-      await load(0);
-      try { await v.play(); } catch (e) {}
-      v.style.opacity = '1';
-      raf = requestAnimationFrame(loop);
-    })();
-    return () => {
-      stopped = true;
-      cancelAnimationFrame(raf);
-      Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} });
-    };
-  }, []);
-  return (
-    <div className="reel">
-      <video ref={vRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/hero.jpg"></video>
-    </div>
-  );
-}
-
-/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop. */
+/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop. Used
+ * on every device: each element keeps its own decoded frame, so swapping a clip
+ * never flashes the poster, and the rAF loop clips each segment to its agreed
+ * in/out points. (A single-element player flashed the poster on every reload.) */
 function HeroReel() {
-  const isTouch = useRef(
-    typeof window !== 'undefined' && window.matchMedia
-      ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
-      : false
-  ).current;
   const aRef = useRef(null), bRef = useRef(null);
   useEffect(() => {
-    if (isTouch) return;
     const els = [aRef.current, bRef.current];
     if (!els[0] || !els[1]) return;
     let cur = 0;            // index (0|1) of the element that is visible + playing
@@ -262,11 +178,10 @@ function HeroReel() {
     begin();
     return () => { stopped = true; cancelAnimationFrame(raf); Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} }); };
   }, []);
-  if (isTouch) return <HeroReelMobile />;
   return (
     <div className="reel">
-      <video ref={aRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/hero.jpg"></video>
-      <video ref={bRef} className="reel__v" muted playsInline preload="auto"></video>
+      <video ref={aRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/reel-still.jpg"></video>
+      <video ref={bRef} className="reel__v" muted playsInline preload="auto" poster="assets/photos/reel-still.jpg"></video>
     </div>
   );
 }
