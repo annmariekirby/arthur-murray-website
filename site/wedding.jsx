@@ -59,7 +59,7 @@ function WeddingReviews() {
       <div className="wrap">
         <div className="reviews__head">
           <div className="reviews__title">
-            <p className="eyebrow">From couples we've married off</p>
+            <p className="eyebrow">From couples we have married off</p>
             <h2 className="display" style={{ marginTop: 14 }}>Danced down the aisle.</h2>
           </div>
           <div className="gbadge">
@@ -94,8 +94,8 @@ function WeddingReviews() {
 function QuickFacts() {
   const facts = [
     { label: "First dance", title: "From a sway to spins", text: "A simple, elegant first dance, or something bigger with dips and a showstopper or two." },
-    { label: "Family dances", title: "Father-daughter & more", text: "We'll prep the father-daughter and mother-son dances right alongside yours." },
-    { label: "Timeline", title: "Six months or six weeks", text: "Start whenever you are. Tell us your date and we'll build a plan that fits." },
+    { label: "Family dances", title: "Father-daughter & more", text: "We will prep the father-daughter and mother-son dances right alongside yours." },
+    { label: "Timeline", title: "Six months or six weeks", text: "Start whenever you are. Tell us your date and we will build a plan that fits." },
   ];
   return (
     <div className="quickfacts">
@@ -128,16 +128,16 @@ function WeddingPage() {
         <div className="wrap">
           <div className="prows">
             <Prow slotId="wed-first-dance" src="assets/photos/wed-firstdance.jpg" placeholder="Drop a first-dance photo" title="A break from the planning chaos">
-              <span className="lead-in">Your lessons become time that's just the two of you</span>, away from the venue, the guest list, and a hundred small decisions. Most couples tell us it's some of the most fun of the whole engagement.
+              <span className="lead-in">Your lessons become time that is just the two of you</span>, away from the venue, the guest list, and a hundred small decisions. Most couples tell us it is some of the most fun of the whole engagement.
             </Prow>
             <Prow flip slotId="wed-timeline" src="assets/photos/wed-timeline.jpg" placeholder="Drop a couple photo" title="Whatever your timeline">
-              <span className="lead-in">Couples come to us six months out and six weeks out alike.</span> The earlier you start, the more we can polish, but even a handful of lessons gives you a confident plan. Tell us your wedding date and we'll build around it.
+              <span className="lead-in">Couples come to us six months out and six weeks out alike.</span> The earlier you start, the more we can polish, but even a handful of lessons gives you a confident plan. Tell us your wedding date and we will build around it.
             </Prow>
             <Prow slotId="wed-build" src="assets/photos/wed-build.jpg" placeholder="Drop a wedding-party photo" title="How we build your dance">
-              <span className="lead-in">Never danced before? Neither had most of our couples.</span> We start from a simple, elegant sway and add as much as you like: dips, spins, a few showstopping moments. You don't even need your song picked yet, and we'll help with the father-daughter and mother-son dances too.
+              <span className="lead-in">Never danced before? Neither had most of our couples.</span> We start from a simple, elegant sway and add as much as you like: dips, spins, a few showstopping moments. You do not even need your song picked yet, and we will help with the father-daughter and mother-son dances too.
             </Prow>
             <Prow flip slotId="wed-unexpected" src="assets/photos/wed-unexpected.jpg" portrait placeholder="Drop a fun / upbeat dance photo" title="Or do something unexpected">
-              <span className="lead-in">The slow, traditional first dance isn't for everyone.</span> More and more couples are choosing an upbeat number, a surprise key change, or a bit of fun choreography no one sees coming. If you've got a bold idea, bring it. Those are some of our favorite dances to put together.
+              <span className="lead-in">The slow, traditional first dance is not for everyone.</span> More and more couples are choosing an upbeat number, a surprise key change, or a bit of fun choreography no one sees coming. If you have a bold idea, bring it. Those are some of our favorite dances to put together.
             </Prow>
           </div>
         </div>
@@ -146,11 +146,11 @@ function WeddingPage() {
       <ContactFormSection
         eyebrow="Your first dance"
         title="Tell us your wedding date."
-        text="Send us a note with your date and we'll put together a plan that fits, whether your day is six months or six weeks away. Or call or text the studio directly."
+        text="Send us a note with your date and we will put together a plan that fits, whether your day is six months or six weeks away. Or call or text the studio directly."
         subject="Wedding dance enquiry from arthurmurraymtpleasant.com"
         source="Wedding Dances page"
         messageLabel="Your wedding date & what you have in mind"
-        messagePlaceholder="Our date is October 18th. We'd love a first dance, maybe a slow song with a dip at the end, and help with the father-daughter dance too."
+        messagePlaceholder="Our date is October 18th. We would love a first dance, maybe a slow song with a dip at the end, and help with the father-daughter dance too."
       />
       <Footer />
     </React.Fragment>

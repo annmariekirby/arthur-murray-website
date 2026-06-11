@@ -44,10 +44,10 @@ function ThankYouPage() {
         <section className="ty__hero">
           <div className="wrap wrap--narrow">
             <p className="eyebrow ty__eyebrow">Message received</p>
-            <h1 className="display ty__title">Thank you &mdash; we&rsquo;ll be in touch.</h1>
+            <h1 className="display ty__title">Thank you &mdash; we will be in touch.</h1>
             <hr className="rule-short" />
             <p className="ty__lede">
-              We&rsquo;ve received your note and a member of our team will get back to
+              We have received your note and a member of our team will get back to
               you shortly.
             </p>
 

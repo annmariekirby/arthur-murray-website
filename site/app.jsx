@@ -233,7 +233,7 @@ function HeroCopy({ onBook, onLight }) {
   return (
     <React.Fragment>
       <h1 className="display">Be the confident dancer at <em>every occasion<span className="hl-dot">.</span></em></h1>
-      <p className="hero__lede">For the wedding, the cruise, the date nights, or simply because you've waited long enough. We teach adults to dance, no partner or experience needed.</p>
+      <p className="hero__lede">For weddings, cruises, date nights, and everything in between. Our personalized lessons make learning fun and easy, no partner or experience needed. Are you ready to take the first step?</p>
       <div className="hero__actions">
         <a className={primaryCls} href="#start" onClick={onBook}>Request Your Free First Lesson</a>
       </div>
@@ -286,7 +286,7 @@ function Reassure() {
   const items = [
     "Your first lesson is on us. No pressure, no commitment.",
     "Patient instructors who teach adults every single day.",
-    "A warm, social crowd you'll look forward to seeing each week.",
+    "A warm, social crowd you will look forward to seeing each week.",
   ];
   return (
     <section className="section section--alt">
@@ -299,7 +299,7 @@ function Reassure() {
           </div>
           <div className="reassure__text">
             <p className="eyebrow">Almost everyone is, at first</p>
-            <h2 className="display">Nervous? You're in good company.</h2>
+            <h2 className="display">Nervous? You are in good company.</h2>
             <p>Most students arrive certain they have two left feet, then surprise themselves within the first ten minutes. We keep it patient, relaxed, and genuinely fun.</p>
             <ul className="reassure__list">
               {items.map((t, i) => (
@@ -467,7 +467,7 @@ function LeadForm() {
       </div>
       <div className="field">
         <label htmlFor="lf-msg">What brings you in?</label>
-        <textarea id="lf-msg" name="message" placeholder="Wedding in the fall, a new hobby, date nights… tell us a little and we'll match you with the right instructor."></textarea>
+        <textarea id="lf-msg" name="message" placeholder="Wedding in the fall, a new hobby, date nights… tell us a little and we will match you with the right instructor."></textarea>
       </div>
       <div className="form__foot">
         <button className="btn btn--primary form__btn" type="submit" disabled={status === 'sending'}>
@@ -486,7 +486,7 @@ function LeadSection() {
         <div className="lead__grid">
           <div className="lead__intro">
             <p className="eyebrow">Get started</p>
-            <h2 className="display" style={{ marginTop: 14 }}>Ready? Let's get you started.</h2>
+            <h2 className="display" style={{ marginTop: 14 }}>Ready? Let us get you started.</h2>
             <hr className="rule-short" />
             <p>Call, text, or email the studio directly, or fill out the form and one of our team members will get in touch with you to schedule your free first lesson.</p>
             <ContactChips />

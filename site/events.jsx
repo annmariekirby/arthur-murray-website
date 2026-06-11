@@ -20,10 +20,10 @@ const INCLUDES = [
 ];
 
 const FOR_YOU_IF = [
-  "You're tired of dinner-and-a-movie being the whole plan",
+  "You are tired of dinner-and-a-movie being the whole plan",
   "You want to have fun and feel more connected at the same time",
   "You wonder where the breakdowns are in your communication",
-  "You've never danced together and want to try something new",
+  "You have never danced together and want to try something new",
   "You want an activity that makes you feel more \u201cin tune\u201d and intimate",
   "You just want to have fun and learn something together",
 ];
@@ -85,7 +85,7 @@ function EventsPage() {
           <p className="eyebrow">On the calendar</p>
           <h1 className="display">Upcoming events</h1>
           <hr className="rule-short" />
-          <p className="pagehead__lede">From time to time we open our doors to the public: a couples workshop, a studio celebration, a themed dance party. Here's what's coming up next.</p>
+          <p className="pagehead__lede">From time to time we open our doors to the public: a couples workshop, a studio celebration, a themed dance party. Here is what is coming up next.</p>
         </div>
       </section>
 
@@ -103,9 +103,9 @@ function EventsPage() {
                 <div className="flyer__date"><span className="flyer__day">28</span><span className="flyer__mon">June<br/>2026</span></div>
                 <p className="eyebrow">Couples Workshop &middot; with Simple Love Counseling</p>
                 <h2 className="flyer__title">The Language Between Us</h2>
-                <p className="flyer__tagline">Part dance, part conversation, and entirely unlike any date night you've had before.</p>
+                <p className="flyer__tagline">Part dance, part conversation, and entirely unlike any date night you have had before.</p>
                 <p className="flyer__meta"><span>Sun, June 28</span><span className="dot">&middot;</span><span>1:00–3:00 PM</span><span className="dot">&middot;</span><span>At the studio</span></p>
-                <p className="flyer__desc">Led together by our instructors and a licensed couples therapist, you'll build real communication skills through games, guided activities, and movement. Expect laughter, a few aha moments, and a dance lesson you'll actually remember. No experience required.</p>
+                <p className="flyer__desc">Led together by our instructors and a licensed couples therapist, you will build real communication skills through games, guided activities, and movement. Expect laughter, a few aha moments, and a dance lesson you will actually remember. No experience required.</p>
                 <ul className="flyer__incl">
                   {INCLUDES.map((it, i) => { const Ico = it.Ico; return (<li key={i}><Ico /><span>{it.title}</span></li>); })}
                 </ul>
@@ -122,7 +122,7 @@ function EventsPage() {
                 <div className="flyer__date"><span className="flyer__day">19</span><span className="flyer__mon">July<br/>2026</span></div>
                 <p className="eyebrow">Studio Celebration &middot; Open House</p>
                 <h2 className="flyer__title">Our Grand Opening</h2>
-                <p className="flyer__tagline">You're invited.</p>
+                <p className="flyer__tagline">You are invited.</p>
                 <p className="flyer__meta"><span>Sun, July 19</span><span className="dot">&middot;</span><span>11 AM–2 PM</span><span className="dot">&middot;</span><span>1136 Hungryneck Blvd</span></p>
                 <p className="flyer__desc">Drop in any time between 11 and 2. Our instructors will teach four short classes, paired with refreshments, performances, and a few surprises. Built for the absolute beginner. No partner necessary, but the more the merrier.</p>
                 <Countdown target={GRAND_OPENING} />
@@ -148,11 +148,11 @@ function EventsPage() {
       <ContactFormSection
         eyebrow="Questions before you book?"
         title="Want to know more first?"
-        text="Have a question about an upcoming event, like what to expect, whether it's a fit, or if there's still room? Send it our way and we'll get back to you. Some events are ticketed through our partners; we'll point you in the right direction."
+        text="Have a question about an upcoming event, like what to expect, whether it is a fit, or if there is still room? Send it our way and we will get back to you. Some events are ticketed through our partners; we will point you in the right direction."
         subject="Event question from arthurmurraymtpleasant.com"
         source="Upcoming Events page"
         messageLabel="Your question"
-        messagePlaceholder="I'd love to know more about your upcoming events. What's a good fit for a couple who've never danced before, and how do we reserve a spot?"
+        messagePlaceholder="I would love to know more about your upcoming events. What is a good fit for a couple who have never danced before, and how do we reserve a spot?"
       />
       <Footer />
     </React.Fragment>
