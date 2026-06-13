@@ -510,6 +510,16 @@ html[data-form="float"] .floatcta { display: inline-flex; }
     padding: 128px 32px 56px;
     animation: navMenuIn var(--dur-slow) var(--ease-out);
   }
+  .nav__mobile-close {
+    position: absolute; top: 16px; right: 16px; z-index: 1;
+    width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    background: none; border: 0; cursor: pointer; color: var(--am-ink);
+    font-size: 24px; line-height: 1; border-radius: var(--radius-sm);
+    -webkit-tap-highlight-color: transparent;
+    transition: color var(--dur-base) var(--ease-standard);
+  }
+  .nav__mobile-close:hover { color: var(--am-brass-deep); }
+  .nav__mobile-close:active { color: var(--am-brass-deep); }
   .nav__mobile-inner { width: 100%; max-width: 440px; margin: 0 auto; text-align: center; }
   .nav__mobile-eyebrow {
     font-family: var(--font-sans); font-size: 12px; font-weight: 600; text-transform: uppercase;

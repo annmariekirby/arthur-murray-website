@@ -46,11 +46,11 @@ function FaqPage() {
       <ContactFormSection
         eyebrow="Still wondering?"
         title="Ask us anything."
-        text="Do not see your question here? Send it our way and we will get you a straight answer. Or call or text the studio anytime."
+        text="Don't see your question here? Send it our way and we'll get you a straight answer. Or call or text the studio anytime."
         subject="Question from the FAQ page at arthurmurraymtpleasant.com"
         source="FAQ page"
         messageLabel="Your question"
-        messagePlaceholder="I have never danced before and I do not have a partner. Is the group class still a good place to start?"
+        messagePlaceholder="I've never danced before and I don't have a partner. Is the group class still a good place to start?"
       />
       <Footer />
     </React.Fragment>
