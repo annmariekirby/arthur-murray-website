@@ -94,29 +94,7 @@ function EventsPage() {
         <div className="wrap">
           <div className="flyers">
 
-            {/* FLYER 1: Couples Workshop */}
-            <article className="flyer">
-              <div className="flyer__media">
-                <img className="flyer__photo" src="assets/photos/evt-language.webp" alt="A couple dancing together at home" loading="lazy" />
-              </div>
-              <div className="flyer__body">
-                <div className="flyer__date"><span className="flyer__day">28</span><span className="flyer__mon">June<br/>2026</span></div>
-                <p className="eyebrow">Couples Workshop &middot; with Simple Love Counseling</p>
-                <h2 className="flyer__title">The Language Between Us</h2>
-                <p className="flyer__tagline">Part dance, part conversation, and entirely unlike any date night you've had before.</p>
-                <p className="flyer__meta"><span>Sun, June 28</span><span className="dot">&middot;</span><span>1:00–3:00 PM</span><span className="dot">&middot;</span><span>At the studio</span></p>
-                <p className="flyer__desc">Led together by our instructors and a licensed couples therapist, you'll build real communication skills through games, guided activities, and movement. Expect laughter, a few aha moments, and a dance lesson you'll actually remember. No experience required.</p>
-                <ul className="flyer__incl">
-                  {INCLUDES.map((it, i) => { const Ico = it.Ico; return (<li key={i}><Ico /><span>{it.title}</span></li>); })}
-                </ul>
-                <div className="flyer__foot">
-                  <a className="btn btn--primary" href={TICKETS_URL} target="_blank" rel="noopener">Reserve Your Spot &rarr;</a>
-                  <p className="flyer__fine">Just 12 couples. Light bites, beer &amp; wine included.</p>
-                </div>
-              </div>
-            </article>
-
-            {/* FLYER 2: Grand Opening (ink poster) */}
+            {/* FLYER: Grand Opening (ink poster) */}
             <article className="flyer flyer--ink">
               <div className="flyer__body">
                 <div className="flyer__date"><span className="flyer__day">19</span><span className="flyer__mon">July<br/>2026</span></div>

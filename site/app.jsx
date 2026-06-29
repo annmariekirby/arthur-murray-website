@@ -233,7 +233,7 @@ function HeroCopy({ onBook, onLight }) {
   return (
     <React.Fragment>
       <h1 className="display">Be the confident dancer at <em>every occasion<span className="hl-dot">.</span></em></h1>
-      <p className="hero__lede">For weddings, cruises, date nights, and everything in between. Our personalized lessons make learning fun and easy, no partner or experience needed. Are you ready to take the first step?</p>
+      <p className="hero__lede">For the wedding, the cruise, the date nights, or simply because you've waited long enough. We teach adults to dance, no partner or experience needed.</p>
       <div className="hero__actions">
         <a className={primaryCls} href="#start" onClick={onBook}>Request Your Free First Lesson</a>
       </div>
