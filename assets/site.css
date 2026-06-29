@@ -786,7 +786,7 @@ html[data-accent="brass"] .step__num { color: var(--am-brass-deep); }
 /* =========================================================================
    Event flyers — each event compressed into a framed poster block
    ========================================================================= */
-.flyers { display: flex; flex-direction: column; gap: 76px; max-width: 1280px; margin: 0 auto; }
+.flyers { display: flex; flex-direction: column; gap: 76px; max-width: 960px; margin: 0 auto; }
 .flyer { display: grid; grid-template-columns: 0.8fr 1.2fr; align-items: stretch;
   border: 1px solid var(--am-ink); border-radius: var(--radius-sm); overflow: hidden; background: var(--bg-surface); }
 .flyer__media { position: relative; background: var(--am-linen); border-right: 1px solid var(--am-ink); display: flex; align-items: center; justify-content: center; padding: 40px 36px; }
