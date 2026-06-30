@@ -92,103 +92,32 @@ function Stars({ n }) { return (<span>{"\u2605".repeat(n || 5)}</span>); }
 /* Nav, Marquee and Footer now live in site/shared.jsx (loaded before this file). */
 
 /* ============================ Hero ======================================= */
-/* Highlight reel: curated clips + the seconds to play from each.
- * Filmed vertically on a phone, so each is shown cropped to its centered
- * 9:16 content (the black side-bars are cropped away by object-fit: cover). */
-const REEL = [
-  { src: "assets/reel/clip9.mp4", start: 6.5,  end: 14.0 }, // striped-shirt couple, the spins (mid)
-  { src: "assets/reel/clip5.mp4", start: 2.0,  end: 9.6  }, // couple in black, sunlit salsa
-  { src: "assets/reel/clip4.mp4", start: 0.8,  end: 8.0  }, // older couple, joyful swing
+/* Photo slideshow: curated studio shots that cross-fade one to the next.
+ * Replaces the old video reel (which loaded unreliably). Each is cropped to
+ * the hero frame by object-fit: cover, centered. */
+const SLIDES = [
+  "assets/photos/slide-1.jpg", // striped-shirt couple mid-spin, colorful skirt
+  "assets/photos/slide-2.jpg", // couple embracing by the sunlit window
+  "assets/photos/slide-3.jpg", // athletic dance hold, maroon + black
+  "assets/photos/slide-4.jpg", // joyful group class, brown + white couple
+  "assets/photos/slide-5.jpg", // close grinning couple
 ];
-const REEL_FADE = 1.1; // seconds of cross-fade overlap between clips (gentle dissolve)
+const SLIDE_HOLD = 4200; // ms each photo is held before the cross-fade to the next
 
-/* Two stacked <video>s that cross-fade clip-to-clip for a seamless loop. Used
- * on every device: each element keeps its own decoded frame, so swapping a clip
- * never flashes the poster, and the rAF loop clips each segment to its agreed
- * in/out points. (A single-element player flashed the poster on every reload.) */
-function HeroReel() {
-  const aRef = useRef(null), bRef = useRef(null), stillRef = useRef(null);
+/* Stacked <img>s; the active one is opaque, the rest transparent. Changing the
+ * active index cross-fades via the CSS opacity transition on .reel__v (1.1s). */
+function HeroSlideshow() {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const els = [aRef.current, bRef.current];
-    if (!els[0] || !els[1]) return;
-    let cur = 0;            // index (0|1) of the element that is visible + playing
-    const segOf = [0, 1];   // which REEL segment each element currently holds
-    let raf = 0, stopped = false, transitioning = false;
-
-    // Clips are fetched as in-memory blob URLs so they're fully seekable even when
-    // the host has no HTTP range support (otherwise currentTime can't jump to a
-    // mid-clip start and the clip just plays from 0).
-    const urlCache = {};
-    const getUrl = async (src) => {
-      if (urlCache[src]) return urlCache[src];
-      const blob = await (await fetch(src)).blob();
-      return (urlCache[src] = URL.createObjectURL(blob));
-    };
-
-    // Load element `ei` with REEL[segIndex], seek to its start, decode that frame.
-    const prep = async (ei, segIndex) => {
-      const el = els[ei], seg = REEL[segIndex % REEL.length];
-      segOf[ei] = segIndex % REEL.length;
-      const url = await getUrl(seg.src);
-      await new Promise((res) => {
-        let done = false;
-        const finish = () => { if (done) return; done = true; el.removeEventListener('seeked', finish); res(); };
-        const seek = () => { el.addEventListener('seeked', finish); try { el.currentTime = seg.start; } catch (e) { finish(); } setTimeout(finish, 1500); };
-        if (el.dataset.src !== seg.src) {
-          el.dataset.src = seg.src; el.src = url;
-          const onReady = () => { el.removeEventListener('loadeddata', onReady); seek(); };
-          el.addEventListener('loadeddata', onReady);
-          el.load();
-        } else { seek(); }
-      });
-    };
-
-    const begin = async () => {
-      await prep(0, 0);
-      await prep(1, 1);
-      els[0].style.opacity = '1'; els[1].style.opacity = '0';
-      try { await els[0].play(); } catch (e) {}
-      // Fade the fallback still out only once real playback has begun, so it
-      // shows on first load / in Low Power Mode (no black rectangle) but is gone
-      // during crossfades — which then dissolve over black, never the still.
-      const hideStill = () => { if (stillRef.current) stillRef.current.style.opacity = '0'; };
-      if (!els[0].paused && els[0].currentTime > 0) hideStill();
-      else els[0].addEventListener('timeupdate', function once() { els[0].removeEventListener('timeupdate', once); hideStill(); });
-      raf = requestAnimationFrame(loop);
-    };
-
-    const loop = async () => {
-      if (stopped) return;
-      const el = els[cur], seg = REEL[segOf[cur]];
-      if (!transitioning && el.currentTime >= seg.end - REEL_FADE) {
-        transitioning = true;
-        const inc = 1 - cur;                 // incoming element (already prepped a cycle ago)
-        const inSeg = REEL[segOf[inc]];
-        try { els[inc].currentTime = inSeg.start; } catch (e) {}
-        try { await els[inc].play(); } catch (e) {}   // ensure it's PLAYING before we show it
-        if (stopped) return;
-        els[inc].style.opacity = '1';
-        els[cur].style.opacity = '0';
-        const outgoing = cur;
-        cur = inc;
-        setTimeout(async () => {
-          if (stopped) return;
-          els[outgoing].pause();                         // hide-then-pause the old clip
-          await prep(outgoing, segOf[inc] + 1);          // re-arm it for the clip after next
-          transitioning = false;
-        }, REEL_FADE * 1000);
-      }
-      raf = requestAnimationFrame(loop);
-    };
-
-    begin();
-    return () => { stopped = true; cancelAnimationFrame(raf); Object.values(urlCache).forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} }); };
+    const id = setInterval(() => setIdx((i) => (i + 1) % SLIDES.length), SLIDE_HOLD);
+    return () => clearInterval(id);
   }, []);
   return (
-    <div className="reel">
-      <img ref={stillRef} className="reel__still" src="assets/photos/reel-still.jpg" alt="" aria-hidden="true" />
-      <video ref={aRef} className="reel__v" muted playsInline preload="auto"></video>
-      <video ref={bRef} className="reel__v" muted playsInline preload="auto"></video>
+    <div className="reel" role="img" aria-label="Students dancing at Arthur Murray Mt. Pleasant">
+      {SLIDES.map((src, i) => (
+        <img key={src} className="reel__v" src={src} alt="" aria-hidden="true"
+             style={{ opacity: i === idx ? 1 : 0 }} />
+      ))}
     </div>
   );
 }
@@ -196,13 +125,13 @@ function HeroReel() {
 function HeroMedia({ inFrame }) {
   const ref = useRef(null);
   const [muted, setMuted] = useState(true);
-  const hasReel = REEL && REEL.length > 0;
+  const hasReel = SLIDES && SLIDES.length > 0;
   const hasVideo = !!AM_CONFIG.heroVideoMp4;
   useEffect(() => { if (ref.current) ref.current.muted = muted; }, [muted]);
   if (hasReel) {
     return (
       <div className={inFrame ? "" : "hero__media"} style={inFrame ? { position: 'absolute', inset: 0 } : null}>
-        <HeroReel />
+        <HeroSlideshow />
       </div>
     );
   }
@@ -233,7 +162,7 @@ function HeroCopy({ onBook, onLight }) {
   return (
     <React.Fragment>
       <h1 className="display">Be the confident dancer at <em>every occasion<span className="hl-dot">.</span></em></h1>
-      <p className="hero__lede">For the wedding, the cruise, the date nights, or simply because you've waited long enough. We teach adults to dance, no partner or experience needed.</p>
+      <p className="hero__lede">For weddings, cruises, date nights, and everything in between. Our personalized lessons make learning fun and easy, no partner or experience needed. Are you ready to take the first step?</p>
       <div className="hero__actions">
         <a className={primaryCls} href="#start" onClick={onBook}>Request Your Free First Lesson</a>
       </div>

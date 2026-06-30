@@ -2,7 +2,7 @@
 /* Shared site chrome: the dance marquee, top nav, and footer used by every page.
  * Loaded before each page's own script; components are published to window so the
  * page scripts (which each get their own Babel scope) can render <Nav/> etc. */
-const { useState: useNavState, useRef: useSharedRef } = React;
+const { useState: useNavState, useRef: useSharedRef, useEffect: useNavEffect } = React;
 
 /* Site-wide config available to every page (wedding/gifts/events/faq load only
  * this file). The homepage's app.jsx merges its own keys over this. */
@@ -53,6 +53,42 @@ function Marquee() {
 function Nav() {
   const [open, setOpen] = useNavState(false);
   const close = () => setOpen(false);
+  const dialogRef = useSharedRef(null);
+  const btnRef = useSharedRef(null);
+
+  // Real-modal behavior while the mobile menu is open: lock background scroll,
+  // move focus into the dialog, trap Tab inside it, close on Escape, and return
+  // focus to the hamburger on close.
+  useNavEffect(() => {
+    if (!open) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const opener = btnRef.current;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusable = () => Array.from(
+      dialog.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+    ).filter((el) => el.offsetParent !== null);
+    const items = focusable();
+    (items[0] || dialog).focus();
+    const onKey = (e) => {
+      if (e.key === "Escape") { e.preventDefault(); setOpen(false); return; }
+      if (e.key === "Tab") {
+        const f = focusable();
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      if (opener) opener.focus();
+    };
+  }, [open]);
+
   const left = NAV_ITEMS.slice(0, 3);
   const right = NAV_ITEMS.slice(3);
   const cls = (href) => "nav__link" + (isActive(href) ? " is-active" : "");
@@ -68,13 +104,14 @@ function Nav() {
         <div className="nav__links nav__links--right">
           {right.map((it) => (<a key={it.label} className={cls(it.href)} href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>))}
         </div>
-        <button className="nav__menu-btn" onClick={() => setOpen(o => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        <button className="nav__menu-btn" ref={btnRef} onClick={() => setOpen(o => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           <span className="nav__menu-label">{open ? "Close" : "Menu"}</span>
           <span className="nav__menu-rule" aria-hidden="true"></span>
         </button>
       </div>
       {open && (
-        <div className="nav__mobile" role="dialog" aria-modal="true" aria-label="Site menu">
+        <div className="nav__mobile" ref={dialogRef} role="dialog" aria-modal="true" aria-label="Main menu" tabIndex={-1} onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
+          <button type="button" className="nav__mobile-close" onClick={close} aria-label="Close menu"><span aria-hidden="true">&#10005;</span></button>
           <div className="nav__mobile-inner">
             <p className="nav__mobile-eyebrow">Arthur Murray Mt. Pleasant</p>
             <div className="nav__mobile-links">
