@@ -1,9 +1,7 @@
 /* global React, ReactDOM, SiteHeader, Footer, ContactFormSection */
 const { useState, useEffect } = React;
 
-const TICKETS_URL = "https://datenight.simplelovecounseling.com/";
-const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("1136 Hungryneck Blvd, Suite E, Mount Pleasant, SC 29464");
-const GRAND_OPENING = new Date("2026-07-19T11:00:00-04:00");
+const DANCE_PARTY = new Date("2026-08-08T18:30:00-04:00");
 
 /* Line icons (Lucide-style, 1.6px stroke) for the "what's included" grid. */
 const IcoMusic = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>);
@@ -28,11 +26,10 @@ const FOR_YOU_IF = [
   "You just want to have fun and learn something together",
 ];
 
-const SCHEDULE = [
-  ["Carolina Shag & Swing", "11:00"],
-  ["Country Two-Step & Line Dancing", "11:45"],
-  ["Wedding First Dance & Reception", "12:30"],
-  ["Salsa & Bachata", "1:15"],
+const EVENING = [
+  "Instruction in several styles of partner dancing, taught at an easy pace",
+  "Music and open social dancing",
+  "Snacks and refreshments",
 ];
 
 function Countdown({ target }) {
@@ -85,7 +82,7 @@ function EventsPage() {
           <p className="eyebrow">On the calendar</p>
           <h1 className="display">Upcoming events</h1>
           <hr className="rule-short" />
-          <p className="pagehead__lede">From time to time we open our doors to the public: a couples workshop, a studio celebration, a themed dance party. Here's what's coming up next.</p>
+          <p className="pagehead__lede">Beyond our regular calendar of classes and parties, a few times a year we host a special event that's open to everyone. Check back to see what's coming up.</p>
         </div>
       </section>
 
@@ -94,28 +91,28 @@ function EventsPage() {
         <div className="wrap">
           <div className="flyers">
 
-            {/* FLYER: Grand Opening (ink poster) */}
+            {/* FLYER: Dance Party with GiGi's Playhouse (ink poster) */}
             <article className="flyer flyer--ink">
               <div className="flyer__body">
-                <div className="flyer__date"><span className="flyer__day">19</span><span className="flyer__mon">July<br/>2026</span></div>
-                <p className="eyebrow">Studio Celebration &middot; Open House</p>
-                <h2 className="flyer__title">Our Grand Opening</h2>
-                <p className="flyer__tagline">You're invited.</p>
-                <p className="flyer__meta"><span>Sun, July 19</span><span className="dot">&middot;</span><span>11 AM–2 PM</span><span className="dot">&middot;</span><span>1136 Hungryneck Blvd</span></p>
-                <p className="flyer__desc">Drop in any time between 11 and 2. Our instructors will teach four short classes, paired with refreshments, performances, and a few surprises. Built for the absolute beginner. No partner necessary, but the more the merrier.</p>
-                <Countdown target={GRAND_OPENING} />
+                <div className="flyer__date"><span className="flyer__day">8</span><span className="flyer__mon">August<br/>2026</span></div>
+                <p className="eyebrow">A Beyond the Ballroom Event &middot; With GiGi's Playhouse</p>
+                <h2 className="flyer__title">Dance Party</h2>
+                <p className="flyer__tagline">An inclusive introduction to ballroom dancing.</p>
+                <p className="flyer__meta"><span>Sat, August 8</span><span className="dot">&middot;</span><span>6:30–8 PM</span><span className="dot">&middot;</span><span>1136 Hungryneck Blvd</span></p>
+                <p className="flyer__desc">Arthur Murray Mt. Pleasant is hosting GiGi's Playhouse and friends for an evening of partner dancing. Our instructors will teach a few social styles at a comfortable pace, then the floor is open. Free to all, ages 16 and up. No partner or experience needed.</p>
+                <Countdown target={DANCE_PARTY} />
                 <div className="flyer__foot">
-                  <a className="btn btn--primary" href={DIRECTIONS_URL} target="_blank" rel="noopener">Get Directions &rarr;</a>
+                  <a className="btn btn--primary" href="#rsvp">RSVP to Attend &rarr;</a>
                 </div>
               </div>
               <div className="flyer__aside">
-                <p className="eyebrow">The schedule</p>
+                <p className="eyebrow">The evening includes</p>
                 <ul className="flyer__sched">
-                  {SCHEDULE.map(([name, time], i) => (
-                    <li key={i}><span className="flyer__sname">{name}</span><span className="flyer__stime">{time}</span></li>
+                  {EVENING.map((name, i) => (
+                    <li key={i}><span className="flyer__sname">{name}</span></li>
                   ))}
                 </ul>
-                <p className="flyer__note">Come as you are. Casual dress, just wear shoes you can move around in.</p>
+                <p className="flyer__note">Free to all &middot; Ages 16+ &middot; Please <a className="link-underline" href="#rsvp">RSVP</a> so we know how many to expect &mdash; include family, friends, and aides in your count.</p>
               </div>
             </article>
 
@@ -124,13 +121,13 @@ function EventsPage() {
       </section>
 
       <ContactFormSection
-        eyebrow="Questions before you book?"
-        title="Want to know more first?"
-        text="Have a question about an upcoming event, like what to expect, whether it's a fit, or if there's still room? Send it our way and we'll get back to you. Some events are ticketed through our partners; we'll point you in the right direction."
-        subject="Event question from arthurmurraymtpleasant.com"
-        source="Upcoming Events page"
-        messageLabel="Your question"
-        messagePlaceholder="I'd love to know more about your upcoming events. What's a good fit for a couple who've never danced before, and how do we reserve a spot?"
+        id="rsvp"
+        title="RSVP"
+        text="Please let us know the total head count of your party. If you have any questions before the 8th, ask away and we'll get right back to you."
+        subject="Dance Party RSVP (Aug 8) from arthurmurraymtpleasant.com"
+        source="Dance Party RSVP — Upcoming Events page"
+        messageLabel="How many are coming, and anything we should know?"
+        messagePlaceholder="I'd like to RSVP for the August 8 dance party. There will be two of us."
       />
       <Footer />
     </React.Fragment>

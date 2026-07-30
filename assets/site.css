@@ -818,7 +818,7 @@ html[data-type="caps"] .flyer__title { font-family: var(--font-sans); font-weigh
 .flyer__incl li { display: flex; align-items: center; gap: 14px; font-family: var(--font-sans); font-size: 16px; font-weight: 600; letter-spacing: 0.02em; color: var(--am-ink); }
 .flyer__incl svg { width: 24px; height: 24px; flex: none; color: var(--am-ink); }
 html[data-accent="brass"] .flyer__incl svg { color: var(--am-brass-deep); }
-.flyer__foot { margin-top: 42px; }
+.flyer__foot { margin-top: 42px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .flyer__fine { font-family: var(--font-body); font-size: 16px; color: var(--fg-tertiary); margin: 16px 0 0; }
 
 /* Linen poster variant (Grand Opening) — warm, not harsh */
