@@ -26,6 +26,25 @@ const FOR_YOU_IF = [
   "You just want to have fun and learn something together",
 ];
 
+/* Order is deliberately mixed — landscape/portrait alternated, and subjects
+ * (group floor shots, couples, workshop exercises) interleaved. */
+const GALLERY = [
+  { src: "assets/photos/gallery/g1.jpg", o: "land", alt: "Couples on the studio floor" },
+  { src: "assets/photos/gallery/g14.jpg", o: "port", alt: "Two dancers finishing a routine with an arm raised" },
+  { src: "assets/photos/gallery/g12.jpg", o: "port", alt: "A couple laughing together in a dance hold" },
+  { src: "assets/photos/gallery/g11.jpg", o: "port", alt: "Students seated on the studio floor during a workshop exercise" },
+  { src: "assets/photos/gallery/g4.jpg", o: "land", alt: "The full floor moving together in a group class" },
+  { src: "assets/photos/gallery/g2.jpg", o: "port", alt: "A couple practicing a turn together" },
+  { src: "assets/photos/gallery/g9.jpg", o: "port", alt: "Two guests at the studio" },
+  { src: "assets/photos/gallery/g5.jpg", o: "port", alt: "A couple dancing by the studio windows" },
+  { src: "assets/photos/gallery/g7.jpg", o: "land", alt: "Guests gathered on the floor before a lesson" },
+  { src: "assets/photos/gallery/g13.jpg", o: "port", alt: "Students taking part in a partnering exercise" },
+  { src: "assets/photos/gallery/g3.jpg", o: "port", alt: "A student and instructor mid-dance, laughing" },
+  { src: "assets/photos/gallery/g8.jpg", o: "land", alt: "Students and instructors together at the studio" },
+  { src: "assets/photos/gallery/g6.jpg", o: "port", alt: "Partners working through a pattern at the mirrors" },
+  { src: "assets/photos/gallery/g10.jpg", o: "port", alt: "Two guests together at the studio" },
+];
+
 const EVENING = [
   "Instruction in several styles of partner dancing, taught at an easy pace",
   "Music and open social dancing",
@@ -129,6 +148,23 @@ function EventsPage() {
         messageLabel="How many are coming, and anything we should know?"
         messagePlaceholder="I'd like to RSVP for the August 8 dance party. There will be two of us."
       />
+
+      <section className="section section--tight gallery">
+        <div className="wrap">
+          <div className="gallery__head">
+            <h2 className="display">A look back</h2>
+            <p className="gallery__lede">Moments from recent events.</p>
+          </div>
+          <div className="gallery__strip">
+            {GALLERY.map((g, i) => (
+              <figure key={i} className={"gallery__frame gallery__frame--" + g.o}>
+                <img src={g.src} alt={g.alt} />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </React.Fragment>
   );

@@ -948,6 +948,25 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
 /* =========================================================================
    Grand opening — ink banner + countdown + schedule
    ========================================================================= */
+/* Recent-events photo strip ------------------------------------------------ */
+.gallery { border-top: 1px solid var(--border-hairline); }
+.gallery .display { font-size: clamp(28px, 3vw, 42px); margin: 0; }
+.gallery__head { text-align: center; margin-bottom: 40px; }
+.gallery__lede { font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--fg-secondary); margin: 16px auto 0; max-width: 46ch; }
+/* Horizontal scroller. Frame aspect matches each photo's native ratio (4:3 / 3:4),
+ * so object-fit: cover crops nothing — group shots stay whole. */
+.gallery__strip { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 14px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+.gallery__frame { flex: none; margin: 0; height: 340px; border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); overflow: hidden; background: var(--am-linen); scroll-snap-align: start; }
+.gallery__frame--land { width: 453px; }
+.gallery__frame--port { width: 255px; }
+.gallery__frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms var(--ease-out), filter 600ms var(--ease-out); }
+.gallery__frame:hover img { transform: scale(1.02); filter: brightness(1.03); }
+@media (max-width: 640px) {
+  .gallery__frame { height: 260px; }
+  .gallery__frame--land { width: 347px; }
+  .gallery__frame--port { width: 195px; }
+}
+
 .event-divide { border: 0; border-top: 1px solid var(--border-hairline); max-width: 1100px; margin: 0 auto; }
 .gobanner { background: var(--am-ink); color: var(--am-paper); text-align: center; padding: 64px 0; }
 .gobanner .eyebrow { color: rgba(250, 248, 244, 0.55); }
@@ -1019,7 +1038,7 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
   .value .display { font-size: 26px; }
   .reviews__title .display, .lead__intro .display, .pagecta .display,
   .social .display, .hours-block .display, .visit__hours .display,
-  .visit__info .display, .gift-occasions .occ-head .display { font-size: 25px; }
+  .visit__info .display, .gift-occasions .occ-head .display, .gallery .display { font-size: 25px; }
   .ty__title { font-size: 28px; }
   .flyer__title, .efeat__title, .evt-head__title, .gobanner__title { font-size: 27px; }
   .field label { font-size: 13px; }
