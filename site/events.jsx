@@ -1,7 +1,5 @@
-/* global React, ReactDOM, SiteHeader, Footer, ContactFormSection */
+/* global React, ReactDOM, SiteHeader, Footer */
 const { useState, useEffect } = React;
-
-const DANCE_PARTY = new Date("2026-08-08T18:30:00-04:00");
 
 /* Line icons (Lucide-style, 1.6px stroke) for the "what's included" grid. */
 const IcoMusic = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>);
@@ -45,37 +43,6 @@ const GALLERY = [
   { src: "assets/photos/gallery/g10.jpg", o: "port", alt: "Two guests together at the studio" },
 ];
 
-const EVENING = [
-  "Instruction in several styles of partner dancing, taught at an easy pace",
-  "Music and open social dancing",
-  "Snacks and refreshments",
-];
-
-function Countdown({ target }) {
-  const calc = () => {
-    const diff = Math.max(0, target.getTime() - Date.now());
-    const s = Math.floor(diff / 1000);
-    return { days: Math.floor(s / 86400), hours: Math.floor((s % 86400) / 3600), minutes: Math.floor((s % 3600) / 60), seconds: s % 60 };
-  };
-  const [t, setT] = useState(calc);
-  useEffect(() => {
-    const id = setInterval(() => setT(calc()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  const pad = (n) => String(n).padStart(2, '0');
-  const cells = [["Days", t.days], ["Hours", pad(t.hours)], ["Minutes", pad(t.minutes)], ["Seconds", pad(t.seconds)]];
-  return (
-    <div className="countdown">
-      {cells.map(([label, val]) => (
-        <div className="cd" key={label}>
-          <div className="cd__num">{val}</div>
-          <div className="cd__label">{label}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function EventMasthead({ eyebrow, title, mon, day, year }) {
   return (
     <header className="evt-head">
@@ -105,49 +72,22 @@ function EventsPage() {
         </div>
       </section>
 
-      {/* ===================== EVENT FLYERS ===================== */}
+      {/* ===================== NO EVENT SCHEDULED (placeholder) ===================== */}
       <section className="section" style={{ paddingTop: 40 }}>
         <div className="wrap">
           <div className="flyers">
 
-            {/* FLYER: Dance Party with GiGi's Playhouse (ink poster) */}
-            <article className="flyer flyer--ink">
+            <article className="flyer flyer--ink flyer--simple">
               <div className="flyer__body">
-                <div className="flyer__date"><span className="flyer__day">8</span><span className="flyer__mon">August<br/>2026</span></div>
-                <p className="eyebrow">A Beyond the Ballroom Event &middot; With GiGi's Playhouse</p>
-                <h2 className="flyer__title">Dance Party</h2>
-                <p className="flyer__tagline">An inclusive introduction to ballroom dancing.</p>
-                <p className="flyer__meta"><span>Sat, August 8</span><span className="dot">&middot;</span><span>6:30–8 PM</span><span className="dot">&middot;</span><span>1136 Hungryneck Blvd</span></p>
-                <p className="flyer__desc">Arthur Murray Mt. Pleasant is hosting GiGi's Playhouse and friends for an evening of partner dancing. Our instructors will teach a few social styles at a comfortable pace, then the floor is open. Free to all, ages 16 and up. No partner or experience needed.</p>
-                <Countdown target={DANCE_PARTY} />
-                <div className="flyer__foot">
-                  <a className="btn btn--primary" href="#rsvp">RSVP to Attend &rarr;</a>
-                </div>
-              </div>
-              <div className="flyer__aside">
-                <p className="eyebrow">The evening includes</p>
-                <ul className="flyer__sched">
-                  {EVENING.map((name, i) => (
-                    <li key={i}><span className="flyer__sname">{name}</span></li>
-                  ))}
-                </ul>
-                <p className="flyer__note">Free to all &middot; Ages 16+ &middot; Please <a className="link-underline" href="#rsvp">RSVP</a> so we know how many to expect &mdash; include family, friends, and aides in your count.</p>
+                <h2 className="flyer__title">More to come</h2>
+                <p className="flyer__tagline">Our next special event is in the works.</p>
+                <p className="flyer__desc">Scroll to see highlights from recent events.</p>
               </div>
             </article>
 
           </div>
         </div>
       </section>
-
-      <ContactFormSection
-        id="rsvp"
-        title="RSVP"
-        text="Please let us know the total head count of your party. If you have any questions before the 8th, ask away and we'll get right back to you."
-        subject="Dance Party RSVP (Aug 8) from arthurmurraymtpleasant.com"
-        source="Dance Party RSVP — Upcoming Events page"
-        messageLabel="How many are coming, and anything we should know?"
-        messagePlaceholder="I'd like to RSVP for the August 8 dance party. There will be two of us."
-      />
 
       <section className="section section--tight gallery">
         <div className="wrap">
