@@ -967,6 +967,84 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
   .gallery__frame--port { width: 195px; }
 }
 
+/* Día de los Muertos flyer — festive ornament kept inside the brand palette
+   (ink, brass, bordeaux) and drawn as line art, never illustration. */
+/* The whole card sits on linen so the bunting, body, and aside share one
+   ground — no white band behind the flags, no patchwork. The linen ground is
+   darker than white, so the muted tokens are re-pointed here once rather than
+   per-selector: every descendant then clears 4.5:1 automatically. */
+.flyer--muertos { background: var(--am-linen); --fg-tertiary: #5A5A5A; --am-stone: #6E6E6E; --marigold: #A85214; }
+/* Stacked layout: a two-column top (text | illustration) over a full-width
+   bottom (paragraph + button). Single column throughout, so no vertical rule. */
+.flyer--muertos { display: block; }
+/* Flush wrap: a wider card than the standard wrap gutter allows, but never
+   edge-to-edge. The 12px gutter is unconditional and max-width absorbs it, so
+   the content box still reaches the full 1120px column at large viewports —
+   no breakpoint that could coincide with .wrap's cap and yield a 0 gutter. */
+.wrap--flush { padding-left: 12px; padding-right: 12px; max-width: 1144px; }
+
+/* Two columns, no divider, cream throughout. Gap is 0 and the text column
+   carries the gutter, so the tracks stay exactly 55/45. The art column bleeds
+   past the row padding so its height is the full content area below the
+   banner; the arch is 93.45% of the artwork, so 96.3% puts it at ~90%. */
+/* Image floats top-right; the heading stack sits beside it and the paragraph
+   continues underneath once it clears — no empty column, no divider. */
+/* Heading stack | art on one row, both bottom-aligned so the art's base sits on
+   the SUNDAY line; the art may rise into the top padding (to just under the
+   banner). The paragraph spans the full content width below both — no wrap.
+   Art width is capped so its height never exceeds heading stack + top padding. */
+.muertos-top { display: grid; grid-template-columns: minmax(380px, 1fr) minmax(0, 332px); grid-template-areas: "head art" "desc desc"; align-items: end; column-gap: 40px; row-gap: 0; padding: 100px 80px 96px; }
+.muertos-head { grid-area: head; min-width: 0; }
+/* Art is 332px wide (~35% up from 246), narrowing only if the title column
+   would drop below 380px. It rises up to 90px into the top padding (stopping
+   10px under the banner); anything taller grows the row, which pushes the
+   bottom-aligned title stack down — i.e. adds space above the "1" rather than
+   cropping or shrinking the image. */
+.muertos-artbox { grid-area: art; min-width: 0; margin-top: -90px; }
+.muertos-art { display: block; width: 100%; height: auto; margin: 0; }
+.flyer--muertos .muertos-top > .flyer__desc { grid-area: desc; margin-top: 64px; line-height: 1.75; }
+/* Paragraph fills the column. */
+.muertos-top .flyer__desc { max-width: none; }
+@media (max-width: 899px) {
+  .muertos-top { padding: 60px 50px 60px; }
+  .muertos-top { grid-template-columns: 1fr; grid-template-areas: "art" "head" "desc"; }
+  .muertos-artbox { width: 100%; max-width: 380px; margin: 0 auto 32px; }
+  .muertos-art { width: 100%; }
+  .flyer--muertos .muertos-top > .flyer__desc { margin-top: 26px; }
+}
+@media (max-width: 560px) {
+  .muertos-top { padding: 45px 32px 45px; }
+}
+/* Single swag, not a repeat: the string hangs high at both ends and sags in
+   the middle, so it scales across the card as one piece. aspect-ratio matches
+   the artwork so 100% 100% can't distort it. */
+.muertos-banner { height: auto; aspect-ratio: 6.164; background: url("photos/muertos-banner3.jpg") no-repeat center / 100% 100%; }
+/* Scaled up and heavier than the standard flyer — this is the page's only
+   event, so it carries the whole section. */
+html[data-accent="brass"] .flyer--muertos .flyer__day, .flyer--muertos .flyer__day { color: var(--marigold); font-size: clamp(109px, 10.4vw, 151px); }
+.flyer--muertos .btn--primary { background: var(--marigold); border-color: var(--marigold); }
+.flyer--muertos .btn--primary:hover { background: #8E440F; border-color: #8E440F; }
+.flyer--muertos .flyer__mon { font-size: 21px; }
+/* Same scoping as the meta row: the single-line requirement is a desktop one,
+   and at ≤899px the text column (230px at a 320px phone) is narrower than the
+   241px intrinsic string, which overflow:hidden would clip. */
+@media (min-width: 900px) { .flyer--muertos .flyer__mon { white-space: normal; } }
+@media (max-width: 560px) { .flyer--muertos .flyer__mon { font-size: 17px; letter-spacing: 0.14em; } }
+.flyer--muertos .muertos-top .eyebrow { font-size: 17px; letter-spacing: 0.24em; }
+.flyer--muertos .flyer__title { font-size: clamp(42px, 5vw, 72px); font-weight: 600; line-height: 1; }
+/* Sized so the intrinsic row stays on one line in the top-left column. */
+/* nowrap makes stranding a separator structurally impossible, and the slightly
+   tighter tracking keeps the intrinsic row inside the narrowest text track the
+   two-column range produces (376px at card 876). */
+.flyer--muertos .flyer__meta { font-size: 15px; font-weight: 700; letter-spacing: 0.01em; gap: 8px; margin-top: 30px; }
+/* nowrap only where the text track is wide enough for the whole row (376px+);
+   below that the card is single-column and the row must be free to wrap, or
+   overflow:hidden silently clips the price. */
+@media (min-width: 900px) { .flyer--muertos .flyer__meta { flex-wrap: nowrap; } }
+.flyer--muertos .flyer__desc { font-size: 20px; line-height: 1.72; margin-top: 26px; }
+
+@media (max-width: 560px) { .flyer--muertos .flyer__desc { font-size: 18px; } }
+
 /* Placeholder state — single column, centered, no aside. */
 .flyer--simple { grid-template-columns: 1fr; text-align: center; }
 .flyer--simple .flyer__body { padding-block: clamp(48px, 6vw, 88px); }
@@ -1052,3 +1130,33 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
   .marquee__item { font-size: 13px; }
   .value__actions .btn, .pagecta__actions .btn, .gobanner__cta .btn { width: 100%; justify-content: center; }
 }
+
+/* Date/time line in marigold; price directly below. */
+.flyer--muertos .muertos-when, .flyer--muertos .muertos-when .dot { color: var(--marigold); }
+.flyer--muertos .muertos-price { margin-top: 8px; }
+
+/* Text stack and illustration share one vertical range. Gaps are fixed at the
+   +30% values (23 / 51 / 10). The title grows to the largest size that keeps
+   "Dead Party" on its line in the column (container-relative), capped at +30%
+   of its old max (94px). The heading stack sets the row height; the art box
+   stretches to it and the image fills that height exactly, proportions locked,
+   so florals top = kicker top and art base = $20 line. */
+@media (min-width: 900px) {
+  .flyer--muertos .muertos-top { padding-top: 56px; grid-template-columns: minmax(380px, 1fr) minmax(0, 332px); }
+  .flyer--muertos .muertos-head { container-type: inline-size; align-self: center; display: block; margin-top: -46px; }
+  .flyer--muertos .muertos-head .flyer__meta { font-size: 20px; }
+  .flyer--muertos .muertos-head > * { margin: 0; }
+  .flyer--muertos .muertos-head > .eyebrow { margin-bottom: 23px; }
+  .flyer--muertos .muertos-when { margin-top: 51px; }
+  .flyer--muertos .muertos-price { margin-top: 10px; }
+  .flyer--muertos .flyer__title { font-size: min(94px, calc(100cqi / 5.2)); line-height: 1; }
+  /* Art sized on its own (not tied to the text height): up to 332px wide, base on
+     the $20 line, florals rising up to 46px into the top padding. */
+  .flyer--muertos .muertos-artbox { align-self: end; justify-self: end; position: static; margin: -46px 0 0; width: 100%; }
+  .flyer--muertos .muertos-art { position: static; width: 100%; height: auto; max-width: 332px; margin-left: auto; max-height: none; }
+}
+
+
+
+/* Larger body paragraph on desktop. */
+@media (min-width: 900px) { .flyer--muertos .muertos-top > .flyer__desc { font-size: 23px; line-height: 1.75; margin-top: 36px; } }

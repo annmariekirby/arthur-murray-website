@@ -1,4 +1,4 @@
-/* global React, ReactDOM, SiteHeader, Footer */
+/* global React, ReactDOM, SiteHeader, Footer, ContactFormSection */
 const { useState, useEffect } = React;
 
 /* Line icons (Lucide-style, 1.6px stroke) for the "what's included" grid. */
@@ -6,6 +6,8 @@ const IcoMusic = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="n
 const IcoHeart = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>);
 const IcoUsers = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>);
 const IcoWine = (p) => (<svg className="incl__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-1-7H8c-.5 3-1 5-1 7a5 5 0 0 0 5 5Z"/></svg>);
+/* ---- Día de los Muertos ornament ---------------------------------------- */
+
 const Check = (p) => (<svg className="forif__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M20 6 9 17l-5-5"/></svg>);
 
 const INCLUDES = [
@@ -68,26 +70,42 @@ function EventsPage() {
           <p className="eyebrow">On the calendar</p>
           <h1 className="display">Upcoming events</h1>
           <hr className="rule-short" />
-          <p className="pagehead__lede">Beyond our regular calendar of classes and parties, a few times a year we host a special event that's open to everyone. Check back to see what's coming up.</p>
+          <p className="pagehead__lede">Beyond our regular calendar of classes and parties, a few times a year we host a special event that's open to everyone.</p>
         </div>
       </section>
 
-      {/* ===================== NO EVENT SCHEDULED (placeholder) ===================== */}
-      <section className="section" style={{ paddingTop: 40 }}>
-        <div className="wrap">
+      {/* ===================== EVENT FLYER ===================== */}
+      <section className="section" style={{ paddingTop: 12 }}>
+        <div className="wrap wrap--flush">
           <div className="flyers">
 
-            <article className="flyer flyer--ink flyer--simple">
-              <div className="flyer__body">
-                <h2 className="flyer__title">More to come</h2>
-                <p className="flyer__tagline">Our next special event is in the works.</p>
-                <p className="flyer__desc">Scroll to see highlights from recent events.</p>
+            <article className="flyer flyer--ink flyer--muertos">
+              <div className="muertos-banner" aria-hidden="true"></div>
+              <div className="muertos-top">
+                <div className="muertos-artbox"><img className="muertos-art" src="assets/photos/muertos-couple4.jpg" alt="Two calavera dancers in a ballroom hold framed by marigolds, dressed for D&iacute;a de los Muertos" /></div>
+                <div className="muertos-head">
+                <p className="eyebrow">D&iacute;a de los Muertos</p>
+                <h2 className="flyer__title">Day of the<br />Dead Party</h2>
+                <p className="flyer__meta muertos-when"><span>Sunday, November 1</span><span className="dot">&middot;</span><span>1:30–4 PM</span></p>
+                <p className="flyer__meta muertos-price"><span>$20 at the door</span></p>
+                </div>
+                <p className="flyer__desc">Join us for an afternoon of Latin dancing, with snacks and drinks throughout. An intro class at 1:30 is included for those new to dancing, followed by open dancing at 2:00. Costumes are encouraged but never required, and there are prizes for the best ones. No partner or experience needed.</p>
               </div>
             </article>
 
           </div>
         </div>
       </section>
+
+      <ContactFormSection
+        id="questions"
+        title="Questions?"
+        text="Send us a note about the party — or anything else — and we'll get right back to you."
+        subject="Question from arthurmurraymtpleasant.com"
+        source="Upcoming Events page — questions"
+        messageLabel="What can we help with?"
+        messagePlaceholder="I have a question about the Day of the Dead party."
+      />
 
       <section className="section section--tight gallery">
         <div className="wrap">
