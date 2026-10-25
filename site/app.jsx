@@ -553,7 +553,6 @@ function App() {
       <Reassure />
       <PhotoBand />
       {ordered}
-      <Social />
       <Hours />
       <Visit />
       <Footer />

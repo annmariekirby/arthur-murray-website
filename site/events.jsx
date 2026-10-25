@@ -30,18 +30,24 @@ const FOR_YOU_IF = [
  * (group floor shots, couples, workshop exercises) interleaved. */
 const GALLERY = [
   { src: "assets/photos/gallery/g1.jpg", o: "land", alt: "Couples on the studio floor" },
+  { src: "assets/photos/gallery/g17.jpg", o: "port", alt: "A couple in ballroom attire performing a smooth dance at the studio" },
   { src: "assets/photos/gallery/g14.jpg", o: "port", alt: "Two dancers finishing a routine with an arm raised" },
   { src: "assets/photos/gallery/g12.jpg", o: "port", alt: "A couple laughing together in a dance hold" },
   { src: "assets/photos/gallery/g11.jpg", o: "port", alt: "Students seated on the studio floor during a workshop exercise" },
+  { src: "assets/photos/gallery/g15.jpg", o: "port", alt: "Residents dancing together during a community class" },
   { src: "assets/photos/gallery/g4.jpg", o: "land", alt: "The full floor moving together in a group class" },
   { src: "assets/photos/gallery/g2.jpg", o: "port", alt: "A couple practicing a turn together" },
   { src: "assets/photos/gallery/g9.jpg", o: "port", alt: "Two guests at the studio" },
+  { src: "assets/photos/gallery/g18.jpg", o: "port", alt: "A couple performing a Latin dance on the studio floor" },
   { src: "assets/photos/gallery/g5.jpg", o: "port", alt: "A couple dancing by the studio windows" },
   { src: "assets/photos/gallery/g7.jpg", o: "land", alt: "Guests gathered on the floor before a lesson" },
+  { src: "assets/photos/gallery/g20.jpg", o: "land", alt: "Students and instructors together at a community event" },
   { src: "assets/photos/gallery/g13.jpg", o: "port", alt: "Students taking part in a partnering exercise" },
+  { src: "assets/photos/gallery/g16.jpg", o: "port", alt: "An instructor leading a group class at a senior living community" },
   { src: "assets/photos/gallery/g3.jpg", o: "port", alt: "A student and instructor mid-dance, laughing" },
   { src: "assets/photos/gallery/g8.jpg", o: "land", alt: "Students and instructors together at the studio" },
   { src: "assets/photos/gallery/g6.jpg", o: "port", alt: "Partners working through a pattern at the mirrors" },
+  { src: "assets/photos/gallery/g19.jpg", o: "port", alt: "A couple smiling together at the studio" },
   { src: "assets/photos/gallery/g10.jpg", o: "port", alt: "Two guests together at the studio" },
 ];
 
@@ -70,7 +76,7 @@ function EventsPage() {
           <p className="eyebrow">On the calendar</p>
           <h1 className="display">Upcoming events</h1>
           <hr className="rule-short" />
-          <p className="pagehead__lede">Beyond our regular calendar of classes and parties, a few times a year we host a special event that's open to everyone.</p>
+          <p className="pagehead__lede">Beyond our regular calendar of classes and parties, we host special events at the studio and in the community, open to everyone.</p>
         </div>
       </section>
 
@@ -90,7 +96,40 @@ function EventsPage() {
                 <p className="flyer__meta muertos-price"><span>$20 at the door</span></p>
                 </div>
                 <p className="flyer__desc">Join us for an afternoon of Latin dancing, with snacks and drinks throughout. An intro class at 1:30 is included for those new to dancing, followed by open dancing at 2:00. Costumes are encouraged but never required, and there are prizes for the best ones. No partner or experience needed.</p>
+                <div className="flyer__foot muertos-foot">
+                  <a className="btn btn--primary" href="https://www.facebook.com/events/1654975116290466" target="_blank" rel="noopener">View on Facebook &rarr;</a>
+                </div>
               </div>
+            </article>
+
+            <article className="flyer flyer--apps">
+              <div className="apps-main">
+                <p className="eyebrow">Off the Apps &middot; A singles event</p>
+                <h2 className="flyer__title">Dating + Dancing</h2>
+                <p className="apps-tag">A different approach to dating.</p>
+                <p className="flyer__desc">We're teaming up with Simple Love Counseling and Hobcaw Brewing for a different kind of singles event. Attendance is by application only: a marriage and family therapist reviews every application and curates the group so everyone in the room has something in common. Once you're accepted, you'll receive details on how to reserve your spot.</p>
+                <p className="flyer__desc">We'll bring the dancing. Our instructors lead an easy, beginner-friendly lesson where partners rotate throughout, so you'll have a chance to meet everyone there. No experience needed. Just show up, grab a drink, and let the dance floor do the introductions.</p>
+                <div className="flyer__foot">
+                  <a className="btn btn--primary" href="https://tinyurl.com/datingdancing" target="_blank" rel="noopener">Apply Now &rarr;</a>
+                </div>
+                <p className="flyer__fine">Application and acceptance required to attend.</p>
+              </div>
+              <aside className="apps-when">
+                <span className="evt-head__mon">Sunday &middot; Nov</span>
+                <span className="apps-day">15</span>
+                <ul className="apps-facts">
+                  <li><span>Time</span><span>4 PM</span></li>
+                  <li><span>Place</span><span>Hobcaw Brewing</span></li>
+                  <li><span>Price</span><span>$57 once accepted, first drink included</span></li>
+                </ul>
+                <div className="apps-partners-logos">
+                  <span className="apps-partners-label">In partnership with</span>
+                  <div className="apps-logos">
+                    <img src="assets/photos/partner-simple-love.png" alt="Simple Love Counseling" />
+                    <img src="assets/photos/partner-hobcaw.webp" alt="Hobcaw Brewing Co., Mount Pleasant, SC" />
+                  </div>
+                </div>
+              </aside>
             </article>
 
           </div>
@@ -100,11 +139,11 @@ function EventsPage() {
       <ContactFormSection
         id="questions"
         title="Questions?"
-        text="Send us a note about the party — or anything else — and we'll get right back to you."
+        text="Send us a note about an event — or anything else — and we'll get right back to you."
         subject="Question from arthurmurraymtpleasant.com"
         source="Upcoming Events page — questions"
         messageLabel="What can we help with?"
-        messagePlaceholder="I have a question about the Day of the Dead party."
+        messagePlaceholder="I have a question about an upcoming event."
       />
 
       <section className="section section--tight gallery">

@@ -1022,8 +1022,6 @@ html[data-accent="brass"] .forif__check { color: var(--am-brass); }
 /* Scaled up and heavier than the standard flyer — this is the page's only
    event, so it carries the whole section. */
 html[data-accent="brass"] .flyer--muertos .flyer__day, .flyer--muertos .flyer__day { color: var(--marigold); font-size: clamp(109px, 10.4vw, 151px); }
-.flyer--muertos .btn--primary { background: var(--marigold); border-color: var(--marigold); }
-.flyer--muertos .btn--primary:hover { background: #8E440F; border-color: #8E440F; }
 .flyer--muertos .flyer__mon { font-size: 21px; }
 /* Same scoping as the meta row: the single-line requirement is a desktop one,
    and at ≤899px the text column (230px at a 320px phone) is narrower than the
@@ -1160,3 +1158,46 @@ html[data-accent="brass"] .flyer--muertos .flyer__day, .flyer--muertos .flyer__d
 
 /* Larger body paragraph on desktop. */
 @media (min-width: 900px) { .flyer--muertos .muertos-top > .flyer__desc { font-size: 23px; line-height: 1.75; margin-top: 36px; } }
+
+/* Off the Apps — co-hosted card. Type-led, brand neutrals; date stack on linen at right. */
+.flyer--apps { grid-template-columns: minmax(0, 1fr) 300px; }
+.apps-main { padding: 80px; }
+.flyer--apps .eyebrow { color: var(--fg-tertiary); }
+.flyer--apps .flyer__title { font-size: clamp(44px, 5.4vw, 72px); line-height: 1; }
+.apps-tag { font-family: var(--font-display); font-style: italic; font-size: clamp(22px, 2.2vw, 28px); color: var(--fg-secondary); margin: 18px 0 0; }
+.flyer--apps .flyer__desc { font-size: 20px; line-height: 1.75; margin-top: 30px; }
+.flyer--apps .flyer__desc + .flyer__desc { margin-top: 18px; }
+.apps-partners { font-family: var(--font-sans); font-size: 15px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--am-ink); margin: -4px 0 22px; }
+.flyer--apps .flyer__foot { margin-top: 36px; }
+.apps-when { background: var(--am-linen); border-left: 1px solid var(--border-hairline); padding: 80px 40px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.apps-day { font-family: var(--font-display); font-size: clamp(96px, 9vw, 132px); line-height: 0.9; color: var(--am-ink); margin: 8px 0 32px; font-variant-numeric: lining-nums; }
+html[data-accent="brass"] .apps-day { color: var(--am-brass-deep); }
+.apps-facts { list-style: none; margin: 0; padding: 0; width: 100%; }
+.apps-facts li { display: flex; flex-direction: column; gap: 6px; padding: 16px 0; border-top: 1px solid var(--border-hairline); }
+.apps-facts li > span:first-child { font-family: var(--font-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-tertiary); }
+.apps-facts li > span:last-child { font-family: var(--font-sans); font-size: 17px; font-weight: 600; letter-spacing: 0.04em; color: var(--am-ink); }
+@media (max-width: 860px) {
+  .flyer--apps { grid-template-columns: 1fr; }
+  .apps-main { padding: 56px 44px 48px; }
+  .apps-when { border-left: 0; border-top: 1px solid var(--border-hairline); padding: 44px; }
+}
+@media (max-width: 560px) {
+  .apps-main { padding: 40px 26px 36px; }
+  .apps-when { padding: 36px 26px; }
+  .flyer--apps .flyer__desc { font-size: 18px; }
+}
+
+.apps-partners-logos { width: 100%; padding-top: 22px; border-top: 1px solid var(--border-hairline); display: flex; flex-direction: column; gap: 16px; }
+.apps-partners-label { font-family: var(--font-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-tertiary); }
+.apps-logos { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+.apps-logos img { display: block; height: auto; max-width: 100%; }
+.apps-logos img:first-child { width: 150px; }
+.apps-logos img:last-child { width: 120px; }
+
+.flyer--muertos .muertos-foot { margin-top: 32px; }
+
+.footer__social { display: flex; justify-content: center; gap: 28px; margin: 8px 0 28px; }
+.footer__social a { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-family: var(--font-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; transition: color var(--dur-base, 220ms) var(--ease-standard, ease); }
+.footer__social a { transition: opacity var(--dur-base, 220ms) var(--ease-standard, ease); }
+.footer__social a:hover { opacity: 0.8; }
+.footer__social svg { width: 26px; height: 26px; flex: none; }
