@@ -147,6 +147,12 @@
           dotsEl.appendChild(b);
         }
       }
+      Array.prototype.forEach.call(cards, function (c) { c.style.height = ""; });
+      for (var g = 0; g < cards.length; g += perPage) {
+        var grp = Array.prototype.slice.call(cards, g, g + perPage), mh = 0;
+        grp.forEach(function (c) { mh = Math.max(mh, c.offsetHeight); });
+        grp.forEach(function (c) { c.style.height = mh + "px"; });
+      }
       if (page > pages - 1) page = 0;
       navEl.style.display = pages > 1 ? "" : "none";
       render();

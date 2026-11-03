@@ -324,6 +324,7 @@ html[data-accent="brass"] .reassure__num { color: var(--am-brass); }
 .rcard__date { font-family: var(--font-body); font-size: 14px; color: var(--fg-tertiary); }
 .rcard__stars { color: #E7A93B; letter-spacing: 2px; font-size: 15px; }
 .rcard__body { font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--fg-secondary); }
+.reviews__track { align-items: start; }
 .rcard__g { width: 16px; height: 16px; margin-top: 2px; opacity: 0.9; }
 .rcard__src { display: flex; align-items: center; gap: 8px; margin-top: auto;
   font-family: var(--font-body); font-size: 14px; color: var(--fg-tertiary); }
