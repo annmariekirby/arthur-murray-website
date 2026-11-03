@@ -123,7 +123,7 @@
 
   /* ---------- Reviews carousel ---------- */
   var rv = document.querySelector(".reviews");
-  if (rv) {
+  if (rv && rv.querySelector(".reviews__track")) {
     var track = rv.querySelector(".reviews__track");
     var cards = track.querySelectorAll(".rcard");
     var navEl = rv.querySelector(".reviews__nav");
