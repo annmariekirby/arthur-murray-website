@@ -147,16 +147,43 @@
           dotsEl.appendChild(b);
         }
       }
-      Array.prototype.forEach.call(cards, function (c) { c.style.height = ""; });
-      for (var g = 0; g < cards.length; g += perPage) {
-        var grp = Array.prototype.slice.call(cards, g, g + perPage), mh = 0;
-        grp.forEach(function (c) { mh = Math.max(mh, c.offsetHeight); });
-        grp.forEach(function (c) { c.style.height = mh + "px"; });
-      }
+      var mh = 0;
+      Array.prototype.forEach.call(cards, function (c) {
+        c.style.height = "";
+        var b = c.querySelector(".rcard__body");
+        c.classList.toggle("rcard--clip", b.scrollHeight > b.clientHeight + 2);
+        mh = Math.max(mh, c.offsetHeight);
+      });
+      Array.prototype.forEach.call(cards, function (c) { c.style.height = mh + "px"; });
       if (page > pages - 1) page = 0;
       navEl.style.display = pages > 1 ? "" : "none";
       render();
     };
+    var modal = document.createElement("div");
+    modal.className = "rmodal";
+    modal.innerHTML = '<div class="rmodal__panel" role="dialog" aria-modal="true" aria-label="Full review"><button type="button" class="rmodal__close" aria-label="Close">✕</button><div class="rmodal__content"></div></div>';
+    document.body.appendChild(modal);
+    var mContent = modal.querySelector(".rmodal__content"), mClose = modal.querySelector(".rmodal__close"), lastBtn = null;
+    mContent.style.cssText = "display:flex;flex-direction:column;gap:18px";
+    var closeModal = function () { modal.classList.remove("is-open"); document.body.style.overflow = ""; if (lastBtn) lastBtn.focus(); };
+    var openModal = function (card, btn) {
+      lastBtn = btn;
+      mContent.innerHTML = card.innerHTML;
+      modal.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      mClose.focus();
+    };
+    mClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal(); });
+    Array.prototype.forEach.call(cards, function (card) {
+      var body = card.querySelector(".rcard__body");
+      var more = document.createElement("button");
+      more.type = "button"; more.className = "rcard__more"; more.textContent = "Read more";
+      body.insertAdjacentElement("afterend", more);
+      more.addEventListener("click", function () { openModal(card, more); });
+      body.addEventListener("click", function () { if (card.classList.contains("rcard--clip")) openModal(card, more); });
+    });
     var arrows = rv.querySelectorAll(".reviews__arrow");
     arrows[0].addEventListener("click", function () { page = (page - 1 + pages) % pages; render(); });
     arrows[1].addEventListener("click", function () { page = (page + 1) % pages; render(); });

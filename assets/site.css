@@ -323,8 +323,18 @@ html[data-accent="brass"] .reassure__num { color: var(--am-brass); }
 .rcard__name { font-family: var(--font-sans); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; color: var(--am-ink); }
 .rcard__date { font-family: var(--font-body); font-size: 14px; color: var(--fg-tertiary); }
 .rcard__stars { color: #E7A93B; letter-spacing: 2px; font-size: 15px; }
-.rcard__body { font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--fg-secondary); }
-.reviews__track { align-items: start; }
+.rcard__body { font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--fg-secondary); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; overflow: hidden; }
+.rcard--clip .rcard__body { cursor: pointer; }
+.rcard__more { align-self: flex-start; visibility: hidden; background: none; border: 0; padding: 0; margin-top: -6px; cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--am-ink); text-decoration: underline; text-underline-offset: 4px; transition: color var(--dur-base); }
+.rcard--clip .rcard__more { visibility: visible; }
+.rcard__more:hover { color: var(--am-brass); }
+.rmodal { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(10,10,10,0.5); }
+.rmodal.is-open { display: flex; }
+.rmodal__panel { position: relative; width: 100%; max-width: 640px; max-height: calc(100vh - 48px); overflow: auto; background: var(--am-paper); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 44px 36px 32px; display: flex; flex-direction: column; gap: 18px; }
+.rmodal__panel .rcard__body { display: block; overflow: visible; cursor: auto; }
+.rmodal__panel .rcard__more { display: none; }
+.rmodal__close { position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border: 0; border-radius: 999px; background: none; cursor: pointer; font-size: 18px; color: var(--am-ink); transition: background var(--dur-base); }
+.rmodal__close:hover { background: var(--am-linen); }
 .rcard__g { width: 16px; height: 16px; margin-top: 2px; opacity: 0.9; }
 .rcard__src { display: flex; align-items: center; gap: 8px; margin-top: auto;
   font-family: var(--font-body); font-size: 14px; color: var(--fg-tertiary); }
