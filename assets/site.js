@@ -151,7 +151,8 @@
       Array.prototype.forEach.call(cards, function (c) {
         c.style.height = "";
         var b = c.querySelector(".rcard__body");
-        c.classList.toggle("rcard--clip", b.scrollHeight > b.clientHeight + 2);
+        c.classList.add("rcard--clip");
+        c.classList.toggle("rcard--clip", b.scrollHeight - b.clientHeight > 0.5);
         mh = Math.max(mh, c.offsetHeight);
       });
       Array.prototype.forEach.call(cards, function (c) { c.style.height = mh + "px"; });
@@ -189,6 +190,9 @@
     arrows[1].addEventListener("click", function () { page = (page + 1) % pages; render(); });
     calc();
     window.addEventListener("resize", calc);
+    window.addEventListener("load", calc);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(calc);
+    if (window.ResizeObserver) { var lastW = 0; new ResizeObserver(function () { var w = track.clientWidth; if (w !== lastW) { lastW = w; calc(); } }).observe(track); }
   }
 
   /* ---------- FAQ accordion (one open at a time) ---------- */
